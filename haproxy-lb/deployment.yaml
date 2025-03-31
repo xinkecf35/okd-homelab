@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: okd-homelab-lab
+spec:
+  selector:
+    matchLabels:
+      app: okd-homelab-lab
+  template:
+    metadata:
+      labels:
+        app: okd-homelab-lab
+    spec:
+      securityContext:
+        sysctls:
+          - name: net.ipv4.ip_unprivileged_port_start
+            value: "0"
+      containers:
+        - name: okd-homelab-lab
+          image: docker.io/haproxy:latest
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
+              name: http
+            - containerPort: 443
+              name: https
+          volumeMounts:
+            - name: haproxy-configs
+              mountPath: /usr/local/etc/haproxy
+              readOnly: true
+      volumes:
+        - name: haproxy-configs
+          configMap:
+            name: haproxy-configs
