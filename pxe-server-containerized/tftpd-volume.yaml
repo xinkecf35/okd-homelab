@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tftpd-boot-volume
+spec:
+  resources:
+    requests:
+      storage: 25Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce

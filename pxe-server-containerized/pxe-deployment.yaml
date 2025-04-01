@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pxe-server
+spec:
+  selector:
+    matchLabels:
+      app: pxe-server
+  template:
+    metadata:
+      labels:
+        app: pxe-server
+    spec:
+      securityContext:
+        sysctls:
+          - name: net.ipv4.ip_unprivileged_port_start
+            value: "0"
+      initContainers:
+        - name: copy-configs
+          image: docker.io/busybox
+          command:
+            - /bin/sh
+            - -c
+            - "cp /configs/pxelinux.cfg /tftpboot && mkdir -p /tftpboot/boot"
+          volumeMounts:
+            - name: tftpd-pxe-configs
+              mountPath: /configs
+              readOnly: true
+            - name: tftpd-boot-volume
+              mountPath: /tftpboot
+      containers:
+        - name: tftpd-server
+          image: docker.io/kalaksi/tftpd
+          env:
+            - name: TFTPD_BIND_ADDRESS
+              value: "0.0.0.0:69"
+            - name: TFTPD_EXTRA_ARGS
+              value: "--blocksize 1468"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - name: tftp
+              containerPort: 69
+              protocol: UDP
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - SETUID
+                - SETGID
+                - SYS_CHROOT
+          volumeMounts:
+            - name: tftpd-boot-volume
+              mountPath: /tftpboot
+        - name: http-server
+          image: docker.io/nginx:stable
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - name: http
+              containerPort: 8080
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - DAC_OVERRIDE
+                - SETUID
+                - SETGID
+                - SYS_CHROOT
+          volumeMounts:
+            - name: tftpd-boot-volume
+              mountPath: /usr/share/nginx/html
+      volumes:
+        - name: tftpd-boot-volume
+          persistentVolumeClaim:
+            claimName: tftpd-boot-volume
+        - name: tftpd-pxe-configs
+          configMap:
+            name: tftpd-pxe-configs
