@@ -8,5 +8,5 @@ resources:
 configMapGenerator:
   - name: tftpd-pxe-configs
     files:
-      - pxelinux.cfg
+      - default=default-pxe-menu
 
