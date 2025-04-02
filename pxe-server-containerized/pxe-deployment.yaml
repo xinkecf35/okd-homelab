@@ -22,7 +22,7 @@ spec:
             - name: TFTPD_BIND_ADDRESS
               value: "0.0.0.0:69"
             - name: TFTPD_EXTRA_ARGS
-              value: "--blocksize 1468"
+              value: "--blocksize 1468 --create"
           resources:
             limits:
               memory: "128Mi"
