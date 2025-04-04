@@ -1,0 +1,6 @@
+apiVersion: v1beta1
+kind: AgentConfig
+metadata:
+  name: lab-01
+rendezvousIP: 192.168.2.40
+bootArtifactsBaseURL: http://192.168.2.40/boot
