@@ -1,14 +1,12 @@
-# replace with actual menu
 DEFAULT menu.c32
 PROMPT 0
 TIMEOUT 100
 ONTIMEOUT local
 
 MENU TITLE Main Menu
-LABEL libreelec
-    MENU LABEL LibreELEC
-    kernel boot/libreelec/KERNEL
-    append <INSERT_YOUR_BOOT_PARAMETERS_HERE>
+LABEL iPXE
+  KERNEL boot/ipxe.lkrn
+  APPEND dhcp && chain http://192.168.2.20/boot/agent.x86_64.ipxe
 
 LABEL local
     MENU LABEL Boot from local disk
