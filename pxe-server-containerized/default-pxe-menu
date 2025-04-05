@@ -6,7 +6,7 @@ ONTIMEOUT local
 MENU TITLE Main Menu
 LABEL iPXE OKD boot
   KERNEL boot/ipxe.lkrn
-  APPEND dhcp && chain http://192.168.2.20/boot/agent.x86_64.ipxe
+  APPEND chain http://192.168.2.20/boot/agent.x86_64.ipxe
 
 LABEL local
     MENU LABEL Boot from local disk
