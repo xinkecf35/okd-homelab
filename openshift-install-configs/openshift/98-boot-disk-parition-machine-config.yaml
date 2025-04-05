@@ -1,0 +1,20 @@
+# Creating this as boot SSDs in use are currently 1 TB in size 
+# and its recommened to create a separate /var/partition
+variant: openshift
+version: 4.19.0
+metadata:
+  name: 98-var-partition
+storage:
+  disks:
+  - device: /dev/nvme0n1
+    partitions:
+    - label: var
+      start_mib: 50000
+      size_mib: 200000
+      number: 5
+  filesystems:
+    - device: /dev/disk/by-partlabel/var
+      path: /var
+      format: xfs
+      mount_options: [defaults, prjquota]
+      with_mount_unit: true

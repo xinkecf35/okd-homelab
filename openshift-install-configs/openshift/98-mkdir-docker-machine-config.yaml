@@ -1,0 +1,15 @@
+# From https://github.com/okd-project/okd/discussions/2015#discussioncomment-12691337
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 98-mkdir-docker
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      directories:
+        - path: /etc/docker
+          mode: 0755
