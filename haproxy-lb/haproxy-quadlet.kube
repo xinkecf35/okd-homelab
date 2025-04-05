@@ -3,7 +3,7 @@ Description=OKD HAProxy Loadbalancer
 Before=local-fs.target
 
 [Kube]
-Yaml=/usr/local/podman-quadlets/haproxy.kube
+Yaml=/usr/local/podman-kube-manifests/haproxy.kube
 Network=k8s-homelab-net
 PodmanArgs=--ip=192.168.2.18
 
