@@ -46,7 +46,7 @@ kustomize build > /usr/local/podman-kube-manifests/haproxy.kube
 ```
 sudo cp haproxy-quadlet.kube /etc/containers/systemd/
 ```
-- Execute `systemctl start`
+- Execute `systemctl start` and make sure it comes up clean
 
 ## TODO:
 
