@@ -51,4 +51,3 @@ sudo cp haproxy-quadlet.kube /etc/containers/systemd/
 ## TODO:
 
 - look into rootless - need to solve with ipvlan or other
-- Quadlet configuration/integrate with systemd
