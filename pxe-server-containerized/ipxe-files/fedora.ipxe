@@ -1,7 +1,7 @@
 #!ipxe
 
 # Set source URI
-set mirror http://download.fedoraproject.org/pub/fedora/linux/releases/41
+set mirror https://mirror.cs.princeton.edu/pub/mirrors/fedora/linux/releases/41
 
 # Detect CPU architecture and calculate repository URI
 cpuid --ext 29 && set arch x86_64 || set arch i386
