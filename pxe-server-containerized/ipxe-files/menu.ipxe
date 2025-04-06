@@ -1,0 +1,15 @@
+#!ipxe
+
+isset ${server-ip} || set server-ip 192.168.2.20
+
+menu PXE Boot Menu
+item fedora "Boot Fedora 41 Live (remote public mirror)"
+item okd_agent "Install OKD (agent installer)"
+choose --timeout 60000 target && goto ${target}
+
+:fedora
+chain http://${server-ip}/ipxe/fedora.ipxe
+
+
+:okd_agent
+chain http://${server-ip}/boot/agent.x86_64.ipxe

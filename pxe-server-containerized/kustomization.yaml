@@ -3,10 +3,11 @@ kind: Kustomization
 
 resources:
   - pxe-deployment.yaml
-  - tftpd-volume.yaml 
+  - tftpd-volume.yaml
 
 configMapGenerator:
   - name: tftpd-pxe-configs
     files:
       - default=default-pxe-menu
-
+      - menu.ipxe=ipxe-files/menu.ipxe
+      - fedora.ipxe=ipxe-files/fedora.ipxe

@@ -42,6 +42,8 @@ spec:
           volumeMounts:
             - name: tftpd-pxe-configs
               mountPath: /tftpboot/pxelinux.cfg
+            - name: tftpd-pxe-configs 
+              mountPath: /tftpboot/ipxe
             - name: tftpd-boot-volume
               mountPath: /tftpboot/boot
         - name: http-server
