@@ -66,6 +66,8 @@ spec:
                 - SETGID
                 - SYS_CHROOT
           volumeMounts:
+            - name: tftpd-pxe-configs 
+              mountPath: /usr/share/nginx/html/ipxe
             - name: tftpd-boot-volume
               mountPath: /usr/share/nginx/html/boot
       volumes:
