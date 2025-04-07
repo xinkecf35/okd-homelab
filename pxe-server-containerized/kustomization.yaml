@@ -11,3 +11,4 @@ configMapGenerator:
       - default=default-pxe-menu
       - menu.ipxe=ipxe-files/menu.ipxe
       - fedora.ipxe=ipxe-files/fedora.ipxe
+      - gparted.ipxe=ipxe-files/gparted.ipxe

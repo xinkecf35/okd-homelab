@@ -1,0 +1,7 @@
+#!ipxe
+
+isset ${server-ip} || set server-ip 192.168.2.20
+
+kernel http://${server-ip}/boot/gparted/vmlinuz boot=live config noswap union=overlay username=user components quiet nosplash fetch=http://${server-ip}/boot/gparted/filesystem.squashfs
+initrd http://${server-ip}/boot/gparted/initrd.img
+boot
