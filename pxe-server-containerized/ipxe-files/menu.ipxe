@@ -5,7 +5,7 @@ isset ${server-ip} || set server-ip 192.168.2.20
 menu PXE Boot Menu
 item fedora "Boot Fedora 41 Live (remote public mirror)"
 item okd_agent "Install OKD (agent installer)"
-item gparted "GPart Live (parition utility)"
+item gparted "GPart Live (partition utility)"
 choose --timeout 60000 target && goto ${target}
 
 :fedora
