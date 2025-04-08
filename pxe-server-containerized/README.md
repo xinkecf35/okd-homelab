@@ -30,10 +30,10 @@ A couple notable diffs now from the reference [`docker-compose.yaml`][2] file:
 - The tftpd and http containers share a single network namespace (this is consistent with `podman kube play`)
 - PXE menu is created as a ConfigMap and overlaid top of the `/tftpboot/pxelinux.cfg` directory
 -  tftp server is allowed to listen on UDP 69 (for convenience w/ the macvlan setup) and thus relevant sysctls are allowed
+- Not really using pxelinux at this time, most relevant stuff is ipxe-files
 
 ## TODO: 
 - setup static IP with pod
-- define an appropriate boot menu
 - Quadlet configuration
 
 
