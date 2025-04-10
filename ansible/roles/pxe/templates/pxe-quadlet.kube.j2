@@ -1,0 +1,11 @@
+[Unit]
+Description=PXE Service
+Before=local-fs.target
+
+[Kube]
+Yaml={{ pxe_kube_play_directory }}/{{ role_name }}.yaml
+Network={{ podman_shared_network_name }}
+PodmanArgs=--ip={{ pxe_ip }}
+
+[Install]
+WantedBy=multi-user.target default.target

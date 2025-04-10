@@ -34,7 +34,7 @@ A couple notable diffs now from the reference [`docker-compose.yaml`][2] file:
 
 ## TODO: 
 - setup static IP with pod
-- Quadlet configuration
+- update this README to fit new Ansible role
 
 
 [1]: https://github.com/kalaksi/docker-tftpd/tree/master

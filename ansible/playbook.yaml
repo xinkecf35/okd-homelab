@@ -5,3 +5,4 @@
   roles:
     - podman_shared
     - haproxy
+    - pxe
