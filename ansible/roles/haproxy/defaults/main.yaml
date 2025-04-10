@@ -1,0 +1,3 @@
+---
+haproxy_ip: 192.168.2.18
+haproxy_kube_play_directory: /usr/local/podman-kube-manifests

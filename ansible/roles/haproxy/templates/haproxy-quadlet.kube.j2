@@ -1,0 +1,11 @@
+[Unit]
+Description=OKD HAProxy Loadbalancer
+Before=local-fs.target
+
+[Kube]
+Yaml={{ haproxy_kube_play_directory }}/{{ role_name }}.yaml
+Network={{ podman_shared_network_name }}
+PodmanArgs=--ip={{ haproxy_ip }}
+
+[Install]
+WantedBy=multi-user.target default.target

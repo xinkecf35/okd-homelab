@@ -1,0 +1,6 @@
+---
+podman_shared_macvlan_gateway: 192.168.2.1
+podman_shared_macvlan_interface: br-vlan20
+podman_shared_macvlan_ip_range: 192.168.2.16/28
+podman_shared_macvlan_subnet: 192.168.2.0/24
+podman_shared_network_name: "k8s-homelab-net"

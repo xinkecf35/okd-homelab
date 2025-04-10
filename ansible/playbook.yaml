@@ -1,0 +1,7 @@
+---
+- name: Setup Supporting Infra for K8S cluster
+  hosts:
+    - all
+  roles:
+    - podman_shared
+    - haproxy

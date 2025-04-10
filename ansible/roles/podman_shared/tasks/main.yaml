@@ -1,0 +1,11 @@
+---
+- name: Create macvlan network
+  containers.podman.podman_network:
+    name: "{{ podman_shared_network_name }}"
+    driver: macvlan
+    subnet: "{{ podman_shared_macvlan_subnet }}"
+    gateway: "{{ podman_shared_macvlan_gateway }}"
+    ip_range: "{{ podman_shared_macvlan_ip_range }}"
+    interface_name: "{{ podman_shared_macvlan_interface }}"
+    ipam_driver: host-local
+  become: true
