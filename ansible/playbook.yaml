@@ -6,3 +6,4 @@
     - podman_shared
     - haproxy
     - pxe
+    - zot_registry

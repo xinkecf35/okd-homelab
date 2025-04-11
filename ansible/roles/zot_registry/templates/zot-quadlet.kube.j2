@@ -1,0 +1,11 @@
+[Unit]
+Description=Zot Registry
+Before=local-fs.target
+
+[Kube]
+Yaml={{ zot_registry_kube_play_directory }}/{{ role_name }}.yaml
+Network={{ podman_shared_network_name }}
+PodmanArgs=--ip={{ zot_registry_ip }}
+
+[Install]
+WantedBy=multi-user.target default.target

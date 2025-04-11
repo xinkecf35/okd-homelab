@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zot-registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zot-registry
+  template:
+    metadata:
+      labels:
+        app: zot-registry
+    spec:
+      securityContext:
+        sysctls:
+          - name: net.ipv4.ip_unprivileged_port_start
+            value: "0"
+      containers:
+        - name: zot
+          securityContext: {}
+          image: "ghcr.io/project-zot/zot-linux-arm64:latest"
+          imagePullPolicy: IfNotPresent
+          env: []
+          ports:
+            - name: zot
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - mountPath: "/var/lib/registry"
+              name: zot-registry-volume
+            - mountPath: '/etc/zot'
+              name: zot-registry-config
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+      volumes:
+        - name: zot-registry-volume
+          persistentVolumeClaim:
+            claimName: zot-registry-volume
+        - name: zot-registry-config
+          configMap:
+            name: zot-registry-config
+      dnsPolicy: ClusterFirst

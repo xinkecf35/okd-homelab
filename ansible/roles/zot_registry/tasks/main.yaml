@@ -1,0 +1,35 @@
+---
+- name: Render manifests for Podman Quadlet
+  ansible.builtin.set_fact:
+    zot_kube_manifests: "{{ lookup('kubernetes.core.kustomize', dir=(role_path + '/' + 'files/kustomize')) }}"
+  delegate_to: 127.0.0.1
+
+- name: Make directory quadlet plays
+  ansible.builtin.file:
+    name: "{{ zot_registry_kube_play_directory }}"
+    state: directory
+    mode: "0o755"
+    owner: "{{ ansible_user }}"
+    group: root
+  become: true
+
+- name: Copy template manifest for quadlet
+  ansible.builtin.copy:
+    content: "{{ zot_kube_manifests }}"
+    dest: "{{ zot_registry_kube_play_directory }}/{{ role_name }}.yaml"
+    mode: "0o644"
+
+- name: Create quadlet for systemd integration
+  ansible.builtin.template:
+    src: zot-quadlet.kube.j2
+    dest: /etc/containers/systemd/zot-quadlet.kube
+    mode: "0o644"
+  become: true
+
+- name: Restart zot-registry service
+  ansible.builtin.systemd_service:
+    name: zot-quadlet
+    daemon_reload: true
+    enabled: true
+    state: restarted
+  become: true
