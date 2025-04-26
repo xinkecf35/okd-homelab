@@ -6,3 +6,11 @@ ingress:
   hostname: sealed-secrets.apps.lab-01.okd.home.arpa
   path: /v1/cert.pem
   tls: false
+
+containerSecurityContext:
+  enabled: true
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  capabilities:
+    drop:
+      - ALL
