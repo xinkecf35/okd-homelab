@@ -7,6 +7,8 @@ ingress:
   path: /v1/cert.pem
   tls: false
 
+revisionHistoryLimit: 1
+
 podSecurityContext:
   enabled: true
   fsGroup: null
