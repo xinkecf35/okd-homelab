@@ -11,6 +11,7 @@ containerSecurityContext:
   enabled: true
   readOnlyRootFilesystem: true
   runAsNonRoot: true
+  runAsUser: null
   capabilities:
     drop:
       - ALL
