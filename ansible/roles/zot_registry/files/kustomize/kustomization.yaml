@@ -4,7 +4,7 @@ kind: Kustomization
 images:
   - name: "ghcr.io/project-zot/zot-linux-arm64:latest"
     newName: ghcr.io/project-zot/zot-linux-amd64
-    newTag: v2.1.2-rc4
+    newTag: v2.1.10
 
 resources:
   - deployment.yaml
