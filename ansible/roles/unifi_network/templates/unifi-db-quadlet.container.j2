@@ -12,7 +12,6 @@ Environment="MONGO_USER={{ unifi_network_mongo_unifi_user }}"
 Environment="MONGO_PASS={{ unifi_network_mongo_unifi_password }}"
 Environment=MONGO_DBNAME=unifi
 Environment=MONGO_AUTHSOURCE=admin
-Network={{ podman_shared_network_name }}
 Network=unifi-network-controller
 Volume={{ unifi_network_quadlet_directory }}/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
 Volume=unifi-mongo-data:/data/db
