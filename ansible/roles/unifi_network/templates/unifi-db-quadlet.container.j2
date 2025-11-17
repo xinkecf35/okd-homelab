@@ -1,0 +1,19 @@
+[Unit]
+Description=MongoDB for Unifi Network Controller Container
+Wants=network-online.target
+After=network-online.target local-fs.target
+
+[Container]
+ContainerName=unifi-db
+Image=public.ecr.aws/docker/library/mongo:8.2-noble
+Environment="MONGO_INITDB_ROOT_USERNAME={{ unifi_network_mongo_root_user }}"
+Environment="MONGO_INITDB_ROOT_PASSWORD={{ unifi_network_mongo_root_password }}"
+Environment="MONGO_USER={{ unifi_network_mongo_unifi_user }}"
+Environment="MONGO_PASS={{ unifi_network_mongo_unifi_user }}"
+Environment=MONGO_DBNAME=unifi
+Environment=MONGO_AUTHSOURCE=admin
+Network={{ podman_shared_network_name }}
+Network=unifi-network-controller
+Volume={{ unifi_network_quadlet_directory }}/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+Volume=unifi-mongo-data:/data/db
+

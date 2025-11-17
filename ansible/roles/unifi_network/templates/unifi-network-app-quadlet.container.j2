@@ -1,0 +1,13 @@
+[Unit]
+Description=MongoDB for Unifi Network Controller Container
+Wants=network-online.target
+After=network-online.target local-fs.target
+
+[Container]
+ContainerName=unifi-network-app
+Image=lscr.io/linuxserver/unifi-network-application:latest
+Network={{ podman_shared_network_name }}
+Network=unifi-network-controller
+Volume="{{ unifi_network_quadlet_directory }}/init-mongo.sh:/data/db"
+Volume=unifi-mongo-data:/data/db
+PodmanArgs="--ip={{ unifi_network_controller_ip }} --mac-address={{ unifi_network_controller_mac }}"
