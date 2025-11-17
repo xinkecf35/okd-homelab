@@ -1,13 +1,20 @@
 [Unit]
 Description=MongoDB for Unifi Network Controller Container
-Wants=network-online.target
-After=network-online.target local-fs.target
+Requires=unifi-db-quadlet.service
+After=unifi-db-quadlet.service
 
 [Container]
 ContainerName=unifi-network-app
 Image=lscr.io/linuxserver/unifi-network-application:latest
-Network={{ podman_shared_network_name }}
+Environment=PUID=1000
+Environment=PGID=1000
+Environment=TZ=Etc/UTC
+Environment=MONGO_USER={{ unifi_network_mongo_unifi_user }}
+Environment=MONGO_PASS={{ unifi_network_mongo_unifi_password | urlencode }}
+Environment=MONGO_HOST=unifi-db
+Environment=MONGO_PORT=27017
+Environment=MONGO_DBNAME=unifi
+Environment=MONGO_AUTHSOURCE=admin
+Network={{ podman_shared_network_name }}:ip={{ unifi_network_controller_ip }},mac={{ unifi_network_controller_mac }}
 Network=unifi-network-controller
-Volume="{{ unifi_network_quadlet_directory }}/init-mongo.sh:/data/db"
-Volume=unifi-mongo-data:/data/db
-PodmanArgs="--ip={{ unifi_network_controller_ip }} --mac-address={{ unifi_network_controller_mac }}"
+Volume=unifi-network-app-config:/config

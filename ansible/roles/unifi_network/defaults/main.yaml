@@ -3,6 +3,6 @@ unifi_network_quadlet_directory: /usr/local/podman-quadlets/unifi-network
 unifi_network_controller_ip: 192.168.2.24
 unifi_network_controller_mac: "02:FC:60:0F:02:46"
 unifi_network_mongo_root_user: root
-unifi_network_mongo_root_password: "{{ lookup('password', 'secrets/unifi_root_password.txt length=32') }}"
+unifi_network_mongo_root_password: "{{ lookup('password', 'secrets/unifi_root_password.txt', length=32, chars=['ascii_letters', 'digits']) }}"
 unifi_network_mongo_unifi_user: unifi
-unifi_network_mongo_unifi_password: "{{ lookup('password', 'secrets/unifi_mongo_password.txt length=32') }}"
+unifi_network_mongo_unifi_password: "{{ lookup('password', 'secrets/unifi_mongo_password.txt', length=32, chars=['ascii_letters', 'digits']) }}"

@@ -11,6 +11,11 @@
     name: unifi-mongo-data
   become: true
 
+- name: Create Podman Volume for UniFi Network App Container
+  containers.podman.podman_volume:
+    name: unifi-network-app-config
+  become: true
+
 - name: Make directory for Unifi Quadlet and Supporting Files
   ansible.builtin.file:
     name: "{{ unifi_network_quadlet_directory }}"
@@ -33,9 +38,24 @@
     mode: "0o644"
   become: true
 
+- name: Create quadlet for UniFi Network App Service
+  ansible.builtin.template:
+    src: unifi-network-app-quadlet.container.j2
+    dest: /etc/containers/systemd/unifi-network-app-quadlet.container
+    mode: "0o644"
+  become: true
+
 - name: Restart UniFi DB service
   ansible.builtin.systemd_service:
     name: unifi-db-quadlet
+    daemon_reload: true
+    enabled: true
+    state: restarted
+  become: true
+
+- name: Restart UniFi Network App service
+  ansible.builtin.systemd_service:
+    name: unifi-network-app-quadlet
     daemon_reload: true
     enabled: true
     state: restarted
