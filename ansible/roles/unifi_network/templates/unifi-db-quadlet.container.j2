@@ -16,3 +16,5 @@ Network=unifi-network-controller
 Volume={{ unifi_network_quadlet_directory }}/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
 Volume=unifi-mongo-data:/data/db
 
+[Install]
+WantedBy=multi-user.target

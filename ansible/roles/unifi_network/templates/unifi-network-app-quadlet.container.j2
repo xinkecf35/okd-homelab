@@ -18,3 +18,6 @@ Environment=MONGO_AUTHSOURCE=admin
 Network={{ podman_shared_network_name }}:ip={{ unifi_network_controller_ip }},mac={{ unifi_network_controller_mac }}
 Network=unifi-network-controller
 Volume=unifi-network-app-config:/config
+
+[Install]
+WantedBy=multi-user.target
