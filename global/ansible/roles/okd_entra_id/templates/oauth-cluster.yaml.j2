@@ -17,6 +17,8 @@ spec:
       clientID: {{ okd_entra_id_client_id }}
       clientSecret:
         name: {{ okd_entra_secret_name }}
-      extraScopes: []
+      extraScopes:
+        - profile
+        - email
       issuer: {{ okd_entra_id_issuer_url }}
     type: OpenID
