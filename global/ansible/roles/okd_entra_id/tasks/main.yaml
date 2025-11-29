@@ -53,6 +53,6 @@
           okd_entra_cluster_admin_users |
           default([]) |
           map('community.general.dict_kv', 'name') |
-          map('combine', {'kind': 'Group', 'apiGroup': 'rbac.authorization.k8s.io'}) |
+          map('combine', {'kind': 'User', 'apiGroup': 'user.openshift.io'}) |
           list
         }}
