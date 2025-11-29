@@ -1,0 +1,38 @@
+---
+- name: Assert required Entra ID variables are not empty
+  ansible.builtin.assert:
+    that:
+      - okd_entra_id_oidc_config is defined and okd_entra_id_oidc_config != ''
+    fail_msg: >
+      One or more required Entra ID variables are empty.
+      Please ensure that okd_entra_id_oidc_config is set and that client_id, client_secret, and issuer_url are set.
+
+- name: Assert OIDC Config values are not empty
+  loop: "{{ okd_entra_id_oidc_config.value | dict2items }}"
+  ansible.builtin.assert:
+    that:
+      - item.value | length > 0
+    fail_msg: "{{ item.key }} is an empty string."
+
+- name: Flatten Entra ID Config with prefix and assert is not empty
+  loop: "{{ okd_entra_id_oidc_config.value | dict2items }}"
+  ansible.builtin.set_fact:
+    "okd_entra_id_{{ item.key }}": "{{ item.value }}"
+
+- name: Create Entra ID Client Secret in the openshift-config namespace
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: "{{ okd_entra_secret_name }}"
+        namespace: openshift-config
+      type: Opaque
+      data:
+        clientSecret: "{{ okd_entra_id_client_secret | b64encode }}"
+
+- name: Patch OAuth configuration with Entra ID configuration
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'oauth-cluster.yaml.j2') | from_yaml }}"

@@ -1,0 +1,11 @@
+---
+- name: Bootstrap OKD for Environment
+  module_defaults:
+    kubernetes.core.k8s:
+      server_side_apply:
+        field_manager: ansible
+      apply: true
+  hosts:
+    - localhost
+  roles:
+    - okd_entra_id
