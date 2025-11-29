@@ -1,0 +1,6 @@
+[tools]
+just = "latest"
+opentofu = "latest"
+"ansible-core" = { version = "latest", uvx = "true", uvx_args = "--with ansible,kubernetes,openshift" }
+"pipx:ansible-lint" = "latest"
+
