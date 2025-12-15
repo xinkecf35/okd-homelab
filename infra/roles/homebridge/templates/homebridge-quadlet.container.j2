@@ -4,7 +4,8 @@ Wants=network-online.target
 After=network-online.target local-fs.target
 
 [Container]
-Image=homebridge/homebridge:latest
+ContainerName=homebridge
+Image=docker.io/homebridge/homebridge:latest
 HealthStartPeriod=300s
 HealthInterval=60s
 HealthRetries=5
@@ -17,6 +18,7 @@ Environment=ENABLE_AVAHI=1
 Network=host
 HealthCmd="curl --fail http://localhost:8581 || exit 1"
 {% endif %}
+Volume=homebridge-data:/homebridge
 
 [Install]
 WantedBy=multi-user.target

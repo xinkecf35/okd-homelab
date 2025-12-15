@@ -4,7 +4,7 @@
     name: homebridge-data
   become: true
 
-- name: Make directory for Unifi Quadlet and Supporting Files
+- name: Make directory for HomeBridge Quadlet and Supporting Files
   ansible.builtin.file:
     name: "{{ homebridge_quadlet_directory }}"
     state: directory
@@ -13,14 +13,14 @@
     group: root
   become: true
 
-- name: Create quadlet for UniFi Network App Service
+- name: Create quadlet for HomeBridge Service
   ansible.builtin.template:
     src: homebridge-quadlet.container.j2
     dest: /etc/containers/systemd/homebridge-quadlet.container
     mode: "0o644"
   become: true
 
-- name: Restart UniFi Network App service
+- name: Restart HomeBridge service
   ansible.builtin.systemd_service:
     name: homebridge-quadlet
     daemon_reload: true
