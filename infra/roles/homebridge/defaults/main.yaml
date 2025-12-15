@@ -1,0 +1,5 @@
+---
+homebridge_quadlet_directory: /usr/local/podman-quadlets/unifi-network
+homebridge_cni_driver: macvlan
+homebridge_controller_ip: 192.168.2.24
+homebridge_controller_mac: "D6:7E:EC:01:F1:56"

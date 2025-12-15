@@ -1,0 +1,22 @@
+[Unit]
+Description=Unifi Network Controller Container
+Wants=network-online.target
+After=network-online.target local-fs.target
+
+[Container]
+Image=homebridge/homebridge:latest
+HealthStartPeriod=300s
+HealthInterval=60s
+HealthRetries=5
+HealthTimeout=2s
+{% if homebridge_cni_driver == 'macvlan'  %}
+HealthCmd="curl --fail http://{{ homebridge_controller_ip }}:8581 || exit 1"
+Network={{ podman_shared_network_name }}:ip={{ homebridge_controller_ip }},mac={{ homebridge_controller_mac }}
+Environment=ENABLE_AVAHI=1
+{% elif homebridge_cni_driver == 'host' %}
+Network=host
+HealthCmd="curl --fail http://localhost:8581 || exit 1"
+{% endif %}
+
+[Install]
+WantedBy=multi-user.target

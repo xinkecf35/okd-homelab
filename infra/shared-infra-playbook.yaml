@@ -5,5 +5,6 @@
   roles:
     - podman_shared
     - haproxy
+    - homebridge
     - pxe
     - zot_registry
