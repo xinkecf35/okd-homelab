@@ -1,0 +1,14 @@
+---
+
+- name: Get Root CA Certificate Info
+  community.crypto.x509_certificate_info:
+    content: "{{ smallstep_ca_root_ca_cert }}"
+  register: smallstep_ca_root_ca_cert_info
+
+- name: Set Root CA fingerprint
+  ansible.builtin.set_fact:
+    smallstep_ca_root_ca_fingerprint: "{{  smallstep_ca_root_ca_cert_info.fingerprints.sha256 | replace(':', '') }}"
+
+- name: Show Root CA Fingerprint
+  ansible.builtin.debug:
+    var: smallstep_ca_root_ca_fingerprint
