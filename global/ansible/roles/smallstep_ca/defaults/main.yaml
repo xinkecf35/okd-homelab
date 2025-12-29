@@ -1,4 +1,5 @@
 ---
+smallstep_ca_secrets_dir: ""
 smallstep_ca_intermediate_ca_cert: |
   -----BEGIN CERTIFICATE-----
   MIIBxjCCAUygAwIBAgIQJOCYk8DimRuxLbNUHuZILzAKBggqhkjOPQQDAzAfMR0w

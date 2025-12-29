@@ -1,5 +1,4 @@
 ---
-
 - name: Get Root CA Certificate Info
   community.crypto.x509_certificate_info:
     content: "{{ smallstep_ca_root_ca_cert }}"
@@ -12,3 +11,7 @@
 - name: Show Root CA Fingerprint
   ansible.builtin.debug:
     var: smallstep_ca_root_ca_fingerprint
+
+- name: Create JWK Provisioner
+  ansible.builtin.import_tasks:
+    file: "create-jwk-provisioner.yaml"

@@ -1,0 +1,50 @@
+---
+- name: Check smallstep_ca_secrets_dir is valid
+  ansible.builtin.assert:
+    that:
+      - smallstep_ca_secrets_dir | length > 0
+
+- name: Create directory for JWK files
+  ansible.builtin.file:
+    path: "{{ [smallstep_ca_secrets_dir, 'step-ca', 'jwk'] | path_join }}"
+    mode: "0o755"
+    state: directory
+  register: smallstep_ca_step_jwk_dir
+
+- name: Setup for JWK File Existence
+  block:
+    - name: "Set JWK File Paths"
+      ansible.builtin.set_fact:
+        smallstep_ca_jwk_public_key_path: "{{ [smallstep_ca_step_jwk_dir.path, 'public.jwk.json'] | path_join }}"
+        smallstep_ca_jwk_private_key_path: "{{ [smallstep_ca_step_jwk_dir.path, 'private.jwk.json'] | path_join }}"
+        smallstep_ca_jwk_private_key_jwe_path: "{{ [smallstep_ca_step_jwk_dir.path, 'private.jwk.jwe'] | path_join }}"
+
+- name: Setup Password File for JWK Creation
+  block:
+    - name: Create tempfile for password
+      ansible.builtin.tempfile:
+        state: file
+        prefix: step-password
+      register: smallstep_ca_step_password_file
+    - name: Copy password to tempfile
+      ansible.builtin.copy:
+        content: "{{ smallstep_ca_provisioner_password }}"
+        mode: "0o600"
+        dest: "{{ smallstep_ca_step_password_file.path }}"
+      no_log: true
+
+- name: Create JWK for Step CA JWK Provisioner
+  ansible.builtin.command:
+    cmd: >
+      step crypto jwk create --kty=EC --alg ES256 --use=sig
+      --password-file {{ smallstep_ca_step_password_file.path }}
+      {{ smallstep_ca_jwk_public_key_path }} {{ smallstep_ca_jwk_private_key_path }}
+    creates: "{{ smallstep_ca_jwk_private_key_path }}"
+
+
+- name: Encrypt JWK Private Key as JWE
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      cat {{ smallstep_ca_jwk_private_key_path }} | step crypto jose format > {{ smallstep_ca_jwk_private_key_jwe_path }}
+    creates: "{{ smallstep_ca_jwk_private_key_jwe_path }}"
