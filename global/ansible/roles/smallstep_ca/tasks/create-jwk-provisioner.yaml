@@ -41,10 +41,20 @@
       {{ smallstep_ca_jwk_public_key_path }} {{ smallstep_ca_jwk_private_key_path }}
     creates: "{{ smallstep_ca_jwk_private_key_path }}"
 
-
 - name: Encrypt JWK Private Key as JWE
   ansible.builtin.shell:
     cmd: |
       set -o pipefail
       cat {{ smallstep_ca_jwk_private_key_path }} | step crypto jose format > {{ smallstep_ca_jwk_private_key_jwe_path }}
     creates: "{{ smallstep_ca_jwk_private_key_jwe_path }}"
+
+- name: Define STEP JWK Provisioner Config
+  ansible.builtin.set_fact:
+    smallstep_ca_jwk_provisioner_config:
+      type: JWK
+      name: DontXinkeShip CA OKD
+      key: "{{ lookup('file', smallstep_ca_jwk_public_key_path) | from_json }}"
+      encryptedKey: "{{ lookup('file', smallstep_ca_jwk_private_key_jwe_path) }}"
+      options:
+        "x509": {}
+        "ssh": {}
