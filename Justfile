@@ -19,4 +19,4 @@ apply-day-1-okd: _tf_init_global_iac
     ansible-playbook "{{ global_ansible_dir }}/day-1-bootstrap-playbook.yaml" --extra-vars="@${OKD_GLOBAL_IAC_TF_OUTPUT_JSON_FILE}" --extra-vars=@{{ global_ansible_secrets_vars_file }}
 
 vault-encrypt-string secret_string :
-    ansible-vault encrypt_string --vault-id {{default_vault_id_arg}} {{secret_string}}
+    ansible-vault encrypt_string --vault-id {{default_vault_id_arg}} "{{secret_string}}"
