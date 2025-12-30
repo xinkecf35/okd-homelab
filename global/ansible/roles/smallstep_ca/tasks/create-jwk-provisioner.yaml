@@ -58,3 +58,8 @@
       options:
         "x509": {}
         "ssh": {}
+
+- name: Define STEP Provisioners List
+  ansible.builtin.set_fact:
+    smallstep_ca_provisioners:
+      - "{{ smallstep_ca_jwk_provisioner_config | to_json }}"

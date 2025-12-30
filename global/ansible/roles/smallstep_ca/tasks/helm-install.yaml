@@ -1,0 +1,14 @@
+---
+- name: Create Temp file for values file
+  ansible.builtin.tempfile:
+    state: file
+    suffix: ".yaml"
+  register: smallstep_ca_values_file
+
+- name: Template Values file from template
+  ansible.builtin.copy:
+    content: "{{ lookup('template', 'values-inject-config.yaml.j2') }}"
+    dest: "{{ smallstep_ca_values_file.path }}"
+    mode: "0o600"
+  vars:
+    smallstep_ca_sans: "{{  smallstep_ca_additional_sans + [smallstep_ca_cn] }}"

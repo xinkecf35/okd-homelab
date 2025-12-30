@@ -8,10 +8,10 @@
   ansible.builtin.set_fact:
     smallstep_ca_root_ca_fingerprint: "{{  smallstep_ca_root_ca_cert_info.fingerprints.sha256 | replace(':', '') }}"
 
-- name: Show Root CA Fingerprint
-  ansible.builtin.debug:
-    var: smallstep_ca_root_ca_fingerprint
-
 - name: Create JWK Provisioner
   ansible.builtin.import_tasks:
     file: "create-jwk-provisioner.yaml"
+
+- name: "Deploy smallstep-ca Helm Chart"
+  ansible.builtin.import_tasks:
+    file: "helm-install.yaml"
