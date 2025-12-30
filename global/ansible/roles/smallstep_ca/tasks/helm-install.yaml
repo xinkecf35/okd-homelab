@@ -12,3 +12,19 @@
     mode: "0o600"
   vars:
     smallstep_ca_sans: "{{  smallstep_ca_additional_sans + [smallstep_ca_cn] }}"
+
+- name: Setup SmallStep Helm Repository
+  kubernetes.core.helm_repository:
+    name: smallstep
+    repo_url: https://smallstep.github.io/helm-charts/
+    force_update: true
+
+- name: Install SmallStep CA Chart
+  kubernetes.core.helm:
+    name: dontxinkeship-ca
+    chart_ref: smallstep/step-certificates
+    values_files:
+      - "{{ smallstep_ca_values_file.path }}"
+    release_namespace: smallstep-ca
+    create_namespace: true
+    release_state: present

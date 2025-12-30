@@ -67,7 +67,10 @@ ingress:
   enabled: true
   ingressClassName: openshift-default
   hosts:
-    - {{ smallstep_ca_cn }}
+    - host: {{ smallstep_ca_cn }}
+      paths: 
+        - path: /
+          type: Prefix
 
 ca:
 # Adjust SecurityContexts to play nice with OKD
@@ -99,6 +102,5 @@ bootstrap:
 
 podSecurityContext:
   runAsNonRoot: true
-  fsGroup: 0
   seccompProfile:
     type: RuntimeDefault
