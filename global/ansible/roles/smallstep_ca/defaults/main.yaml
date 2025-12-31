@@ -74,3 +74,6 @@ smallstep_ca_provisioner_password: !vault |
 smallstep_ca_cn: step-ca.apps.lab-01.okd.home.arpa
 smallstep_ca_additional_sans:
   - step-ca.home.arpa
+
+smallstep_ca_service_account_name: step-ca
+smallstep_ca_namespace_name: smallstep-ca

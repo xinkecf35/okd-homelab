@@ -72,6 +72,10 @@ ingress:
         - path: /
           type: Prefix
 
+serviceaccount:
+  create: true
+  name: {{ smallstep_ca_service_account_name }}
+
 ca:
 # Adjust SecurityContexts to play nice with OKD
   init:

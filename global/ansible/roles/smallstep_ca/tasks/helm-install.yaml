@@ -13,6 +13,11 @@
   vars:
     smallstep_ca_sans: "{{  smallstep_ca_additional_sans + [smallstep_ca_cn] }}"
 
+- name: Create Role/Rolebinding for ServiceAccount
+  kubernetes.core.k8s:
+    state: present
+    template: nonroot-v2-scc.yaml.j2
+
 - name: Setup SmallStep Helm Repository
   kubernetes.core.helm_repository:
     name: smallstep
@@ -24,7 +29,8 @@
     name: dontxinkeship-ca
     chart_ref: smallstep/step-certificates
     values_files:
-      - "{{ smallstep_ca_values_file.path }}"
+      # - "{{ smallstep_ca_values_file.path }}"
+      - values-okd-deploy.yaml
     release_namespace: smallstep-ca
     create_namespace: true
     release_state: present

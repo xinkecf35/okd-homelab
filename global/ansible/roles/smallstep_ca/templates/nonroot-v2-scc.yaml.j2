@@ -1,0 +1,28 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: use-nonroot-v2-scc
+  namespace: {{ smallstep_ca_namespace_name }}
+rules:
+  - apiGroups:
+      - security.openshift.io
+    resources:
+      - securitycontextconstraints
+    resourceNames:
+      - nonroot-v2
+    verbs:
+      - use
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: step-ca-use-nonroot-v2
+  namespace: {{ smallstep_ca_namespace_name }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ smallstep_ca_service_account_name }}
+    namespace: {{ smallstep_ca_namespace_name }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: use-nonroot-v2-scc
