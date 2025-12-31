@@ -1,0 +1,37 @@
+---
+- name: Install packages for NFS
+  ansible.builtin.apt:
+    pkg:
+      - nfs-kernel-server
+      - nfs-common
+    state: present
+    update_cache: true
+  become: true
+
+- name: Setup NFSv4 only configuration
+  ansible.builtin.copy:
+    src: "10-nfsv4-only.conf"
+    dest: /etc/nfs.conf.d/10-nfsv4-only.conf
+    mode: "0o644"
+  become: true
+
+- name: Create NFS rootdir to house exports
+  ansible.builtin.file:
+    path: /srv/nfs
+    mode: "0o755"
+    state: directory
+  become: true
+
+- name: Create /etc/exports.d for export definitions
+  ansible.builtin.file:
+    path: /etc/exports.d
+    mode: "0o755"
+    state: directory
+  become: true
+
+- name: Restart NFS Services
+  ansible.builtin.systemd:
+    name: nfs-server.service
+    enabled: true
+    state: restarted
+  become: true

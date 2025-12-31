@@ -8,3 +8,4 @@
     - homebridge
     - pxe
     - zot_registry
+    - nfs
