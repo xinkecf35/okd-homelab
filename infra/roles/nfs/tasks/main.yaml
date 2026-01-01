@@ -29,6 +29,13 @@
     state: directory
   become: true
 
+- name: Export /srv/nfs as distinguished filesystem/functional root
+  ansible.builtin.copy:
+    src: 10-root.exports
+    dest: /etc/exports.d/10-root.exports
+    mode: "0o644"
+  become: true
+
 - name: Restart NFS Services
   ansible.builtin.systemd:
     name: nfs-server.service
