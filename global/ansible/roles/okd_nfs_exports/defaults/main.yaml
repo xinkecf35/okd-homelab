@@ -1,0 +1,25 @@
+---
+okd_nfs_exports_root_fs: /srv/nfs
+okd_nfs_exports:
+  - name: lab-01
+    allowed_hosts:
+      - 192.168.2.40
+      - 192.168.2.41
+      - 192.168.2.42
+    export_options:
+      - rw
+      - sync
+      - no_subtree_check
+      - root_squash
+  - name: test-01
+    allowed_hosts:
+      - 192.168.2.40
+      - 192.168.2.41
+      - 192.168.2.42
+    export_options:
+      - rw
+      - sync
+      - no_subtree_check
+      - root_squash
+
+okd_nfs_exports_force_destroy: false
