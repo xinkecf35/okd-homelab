@@ -11,17 +11,17 @@ okd_nfs_exports:
       - sync
       - no_subtree_check
       - root_squash
-    quota: 50G
-  - name: test-01
-    allowed_hosts:
-      - 192.168.2.40
-      - 192.168.2.41
-      - 192.168.2.42
-    export_options:
-      - rw
-      - sync
-      - no_subtree_check
-      - root_squash
+    quota: 100G
+  # - name: test-01
+  #   allowed_hosts:
+  #     - 192.168.2.40
+  #     - 192.168.2.41
+  #     - 192.168.2.42
+  #   export_options:
+  #     - rw
+  #     - sync
+  #     - no_subtree_check
+  #     - root_squash
 
 okd_nfs_exports_force_destroy: false
 okd_nfs_exports_zpool_name: shared-data

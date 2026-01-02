@@ -22,6 +22,7 @@
 #         "192.168.2.41",
 #         "192.168.2.42"
 #     ],
+#     dataset_name: shared-data/okd-nfs-exports/lab-01
 #     "export_options": "rw,sync,no_subtree_check,root_squash",
 #     "filename": "99-okd-nfs-lab-01.exports",
 #     "fsid": "31c9ac4a-ac53-515e-a7a5-a48b8d5125cd",

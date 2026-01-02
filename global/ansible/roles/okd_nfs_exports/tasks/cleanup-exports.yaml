@@ -1,0 +1,42 @@
+---
+- name: Remove extraneous exports
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ okd_nfs_exports_existing_exports }}"
+  when: (item | basename) not in okd_nfs_exports_desired_exports
+  notify: Reload NFS Exports
+
+- name: Remove extraneous groups
+  ansible.builtin.group:
+    name: "okd-nfs-{{ item | basename | replace('99-okd-nfs-', '') | replace('.exports', '') }}"
+    state: absent
+  loop: "{{ okd_nfs_exports_existing_exports }}"
+  when: (item | basename) not in okd_nfs_exports_desired_exports
+
+- name: Remove extraneous ZFS Datasets
+  community.general.zfs:
+    name: >-
+      {{
+        [
+          okd_nfs_exports_zpool_name,
+          'okd-nfs-exports',
+          ( item | basename | replace('99-okd-nfs-', '') | replace('.exports', '') )
+        ] | join('/')
+      }}
+    state: absent
+  loop: "{{ okd_nfs_exports_existing_exports }}"
+  when: okd_nfs_exports_force_destroy and ((item | basename) not in okd_nfs_exports_desired_exports)
+
+- name: Clean up mountpoints
+  ansible.builtin.file:
+    path: >-
+      {{
+        [
+          okd_nfs_exports_root_fs,
+          ( item | basename | replace('99-okd-nfs-', '') | replace('.exports', '') )
+        ] | path_join
+      }}
+    state: absent
+  loop: "{{ okd_nfs_exports_existing_exports }}"
+  when: okd_nfs_exports_force_destroy and ((item | basename) not in okd_nfs_exports_desired_exports)

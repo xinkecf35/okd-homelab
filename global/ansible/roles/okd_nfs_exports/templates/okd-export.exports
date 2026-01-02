@@ -2,5 +2,5 @@
 {% set fsid_opt = 'fsid=' ~ config.fsid %}
 {% set nfs_export_options = ([fsid_opt] + config.export_options) | join(',') %}
 {% for host in config.allowed_hosts %}
-{{ config.mountpoint }} {{ host }} ({{ nfs_export_options }})
+{{ config.mountpoint }} {{ host }}({{ nfs_export_options }})
 {% endfor %}

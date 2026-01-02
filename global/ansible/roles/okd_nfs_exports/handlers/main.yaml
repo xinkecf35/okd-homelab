@@ -1,0 +1,4 @@
+---
+- name: Reload NFS Exports
+  ansible.builtin.command:
+    cmd: exportfs -arv

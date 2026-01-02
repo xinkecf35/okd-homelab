@@ -23,3 +23,45 @@
     dest: "{{ ['/etc/exports.d/', item.value.filename] | path_join }}"
     mode: "0o644"
   loop: "{{ okd_nfs_exports_desired_exports | dict2items }}"
+  notify: Reload NFS Exports
+
+- name: Create groups for NFS shares
+  ansible.builtin.group:
+    name: "okd-nfs-{{ item.value.name }}"
+    state: present
+  loop: "{{ okd_nfs_exports_desired_exports | dict2items }}"
+  register: okd_nfs_exports_groups
+
+# Create a map of the following shape:
+# "okd_nfs_exports_fs_groups_map": {
+#     "lab-01": {
+#         "gid": 1004,
+#         "name": "okd-nfs-lab-01"
+#     }
+# }
+- name: Set NFS FS group fact
+  ansible.builtin.set_fact:
+    okd_nfs_exports_fs_groups_map: >
+      {{
+        okd_nfs_exports_fs_groups |
+        default({}) |
+        combine({
+          group_result[group_result.ansible_loop_var].value.name: ({
+            'name': group_result.name,
+            'gid': group_result.gid
+          })
+        })
+      }}
+  loop: "{{ okd_nfs_exports_groups.results }}"
+  loop_control:
+    loop_var: group_result
+  register: okd_nfs_exports_fs_groups_map
+
+- name: Set NFS Share ownerships for export
+  ansible.builtin.file:
+    path: "{{ item.value.mountpoint }}"
+    owner: root
+    group: "okd-nfs-{{ item.value.name }}"
+    mode: "0o2775"
+    state: directory
+  loop: "{{ okd_nfs_exports_desired_exports | dict2items }}"
