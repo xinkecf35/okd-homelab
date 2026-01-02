@@ -1,0 +1,54 @@
+---
+- name: Get existing NFS exports
+  ansible.builtin.find:
+    paths:
+      - "/etc/exports.d/"
+    patterns:
+      - "99-okd-nfs-*.exports"
+  register: okd_nfs_exports_files
+
+- name: Set existing/current exports fact
+  ansible.builtin.set_fact:
+    okd_nfs_exports_existing_exports: >
+      {{ okd_nfs_exports_files.files | map(attribute='path') }}
+
+# A bit complicated but intent is to have key be the filename of the exports file
+# And relevant configuration including a derived UUID from the name and mountpoints be value of said key
+# Reason for this it to make existence checks easier existing exports
+# Example:
+# "99-okd-nfs-lab-01.exports": {
+#     "allowed_hosts": [
+#         "192.168.2.40",
+#         "192.168.2.41",
+#         "192.168.2.42"
+#     ],
+#     "export_options": "rw,sync,no_subtree_check,root_squash",
+#     "filename": "99-okd-nfs-lab-01.exports",
+#     "fsid": "31c9ac4a-ac53-515e-a7a5-a48b8d5125cd",
+#     "mountpoint": "/srv/nfs/lab-01",
+#     "name": "lab-01"
+# }
+- name: Set desired exports fact
+  ansible.builtin.set_fact:
+    okd_nfs_exports_desired_exports: >
+      {{
+        okd_nfs_exports_desired_exports |
+        default({}) |
+        combine({
+          ('99-okd-nfs-' ~ item.name ~ '.exports'): (item | combine( {
+            'filename': '99-okd-nfs-' ~ item.name ~ '.exports',
+            'mountpoint': ([okd_nfs_exports_root_fs, item.name] | path_join),
+            'fsid': (item.name | to_uuid('8903671e-c228-4172-bec2-be159ad119ed'))
+          }))
+        })
+      }}
+
+  loop: "{{ okd_nfs_exports }}"
+
+- name: Show managed exports
+  ansible.builtin.debug:
+    var: okd_nfs_exports_existing_exports
+
+- name: Show desired exports
+  ansible.builtin.debug:
+    var: okd_nfs_exports_desired_exports

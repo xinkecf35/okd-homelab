@@ -1,0 +1,8 @@
+---
+- name: Create Desired Exports on Server
+  ansible.builtin.template:
+    src: okd-export.exports
+    dest: "{{ ['/etc/exports.d/', item.value.filename] | path_join }}"
+    mode: "0o644"
+
+  loop: "{{ okd_nfs_exports_desired_exports | dict2items }}"
