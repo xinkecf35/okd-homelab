@@ -1,8 +1,25 @@
 ---
+- name: Create ZFS Dataset on Server
+  community.general.zfs:
+    name: "{{ item.value.dataset_name }}"
+    state: present
+    extra_zfs_properties:
+      atime: "off"
+      acltype: posix
+      canmount: "on"
+      compression: "lz4"
+      exec: "on"
+      logbias: "latency"
+      mountpoint: "{{ item.value.mountpoint }}"
+      quota: "{{ item.value.quota | default('10G') }}"
+      recordsize: "1M"
+      setuid: "on"
+      xattr: "sa"
+  loop: "{{ okd_nfs_exports_desired_exports | dict2items }}"
+
 - name: Create Desired Exports on Server
   ansible.builtin.template:
     src: okd-export.exports
     dest: "{{ ['/etc/exports.d/', item.value.filename] | path_join }}"
     mode: "0o644"
-
   loop: "{{ okd_nfs_exports_desired_exports | dict2items }}"

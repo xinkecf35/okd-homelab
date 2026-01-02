@@ -36,9 +36,10 @@
         default({}) |
         combine({
           ('99-okd-nfs-' ~ item.name ~ '.exports'): (item | combine( {
+            'dataset_name': ([okd_nfs_exports_zpool_name, 'okd-nfs-exports', item.name] | join('/') ),
             'filename': '99-okd-nfs-' ~ item.name ~ '.exports',
-            'mountpoint': ([okd_nfs_exports_root_fs, item.name] | path_join),
-            'fsid': (item.name | to_uuid('8903671e-c228-4172-bec2-be159ad119ed'))
+            'mountpoint': ( [okd_nfs_exports_root_fs, item.name] | path_join) ,
+            'fsid': ( item.name | to_uuid('8903671e-c228-4172-bec2-be159ad119ed') )
           }))
         })
       }}

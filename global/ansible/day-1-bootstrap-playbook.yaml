@@ -9,3 +9,6 @@
     - localhost
   roles:
     - okd_entra_id
+    - name: smallstep_ca
+      vars:
+        smallstep_ca_secrets_dir: "{{ [playbook_dir, 'secrets'] | path_join }}"

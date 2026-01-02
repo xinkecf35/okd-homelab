@@ -6,8 +6,7 @@
 - name: Create Datasets and Exports for Declared Configs
   ansible.builtin.import_tasks:
     file: "create-exports.yaml"
-# TODO: turn exports map into ZFS dataset and mount under /srv/nfs
-# TODO: template out exports file using template
+
 # TODO: perform existence check against existing against desired where if existing export file is not a key in desired export state should be absent
 # TODO: when force_destroy is true delete the ZFS dataset as well
 # TODO: maybe put in different role, but deploy the NFS CSI Driver, delegating to localhost, with these parameters.
