@@ -1,1 +1,1 @@
-/srv/nfs 192.168.2.0/24(ro,fsid=0,no_subtree_check)
+/srv/nfs 192.168.2.0/24(rw,fsid=0,no_subtree_check,crossmnt)

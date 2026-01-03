@@ -94,6 +94,8 @@ ca:
       drop: ["ALL"]
       add: ["NET_BIND_SERVICE"]
     runAsNonRoot: true
+    fsGroup: 1004
+    fsGroupChangePolicy: OnRootMismatch
   db:
     storageClass: nfs
     accessModes:
@@ -110,5 +112,7 @@ bootstrap:
 
 podSecurityContext:
   runAsNonRoot: true
+  fsGroup: 1004
+  fsGroupChangePolicy: OnRootMismatch
   seccompProfile:
     type: RuntimeDefault

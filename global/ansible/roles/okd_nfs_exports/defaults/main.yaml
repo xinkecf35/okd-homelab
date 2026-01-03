@@ -10,7 +10,7 @@ okd_nfs_exports:
       - rw
       - sync
       - no_subtree_check
-      - root_squash
+      - no_root_squash
     quota: 100G
   # - name: test-01
   #   allowed_hosts:

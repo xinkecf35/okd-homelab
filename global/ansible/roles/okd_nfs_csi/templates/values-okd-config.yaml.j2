@@ -12,8 +12,8 @@ storageClass:
   name: nfs
   parameters:
     server: {{ okd_csi_nfs_host }}
-    share: "/"
-    subDir: {{ okd_nfs_csi_share }}
+    share: "/{{ okd_nfs_csi_share }}"
+    mountPermissions: "0777"
   reclaimPolicy: Delete
   volumeBindingMode: Immediate
   allowVolumeExpansion: true

@@ -62,6 +62,6 @@
     path: "{{ item.value.mountpoint }}"
     owner: root
     group: "okd-nfs-{{ item.value.name }}"
-    mode: "0o2775"
+    mode: "0o1777"
     state: directory
   loop: "{{ okd_nfs_exports_desired_exports | dict2items }}"
