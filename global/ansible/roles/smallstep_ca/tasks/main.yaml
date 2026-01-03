@@ -10,7 +10,7 @@
 
 - name: Create JWK Provisioner
   ansible.builtin.import_tasks:
-    file: "create-jwk-provisioner.yaml"
+    file: "create-provisioners.yaml"
 
 - name: "Deploy smallstep-ca Helm Chart"
   ansible.builtin.import_tasks:
