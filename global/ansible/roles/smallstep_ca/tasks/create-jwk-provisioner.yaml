@@ -58,8 +58,20 @@
       options:
         "x509": {}
         "ssh": {}
+    smallstep_ca_acme_provisioner_config:
+      type: ACME
+      name: dont-xinkeship-acme
+      claims:
+        enableSSHCA: true
+        disableRenewal: false
+        allowRenewalAfterExpiry: false
+        disableSmallstepExtensions: false
+      forceCN: true
+      options:
+        x509: {}
 
 - name: Define STEP Provisioners List
   ansible.builtin.set_fact:
     smallstep_ca_provisioners:
       - "{{ smallstep_ca_jwk_provisioner_config | to_json }}"
+      - "{{ smallstep_ca_acme_provisioner_config | to_json }}"
