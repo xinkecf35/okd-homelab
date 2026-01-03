@@ -64,13 +64,15 @@ inject:
 {{ smallstep_ca_intermediate_ca_key | indent(8, true) }}
 
 ingress:
+  annotations:
+    route.openshift.io/termination: passthrough
   enabled: true
   ingressClassName: openshift-default
   hosts:
     - host: {{ smallstep_ca_cn }}
       paths: 
-        - path: /
-          type: Prefix
+        - path: ''
+          type: ImplementationSpecific
 
 serviceaccount:
   create: true
