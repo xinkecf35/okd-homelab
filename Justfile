@@ -16,7 +16,7 @@ _tf_init_global_iac:
 apply-day-1-okd: _tf_init_global_iac
     {{ tf_bin }} -chdir="{{ global_iac_dir }}" apply
     {{ tf_bin }} -chdir="{{ global_iac_dir }}" output -json > "${OKD_GLOBAL_IAC_TF_OUTPUT_JSON_FILE}"
-    ansible-playbook "{{ global_ansible_dir }}/day-1-bootstrap-playbook.yaml" --extra-vars="@${OKD_GLOBAL_IAC_TF_OUTPUT_JSON_FILE}" --extra-vars=@{{ global_ansible_secrets_vars_file }}
+    ansible-playbook "{{ global_ansible_dir }}/day-1-bootstrap-playbook.yaml" --vault-id "{{ ansible_vault_id }}@{{ ansible_vault_password_helper }}" --extra-vars="@${OKD_GLOBAL_IAC_TF_OUTPUT_JSON_FILE}" --extra-vars=@{{ global_ansible_secrets_vars_file }} --ask-become
 
 vault-encrypt-string secret_string :
     ansible-vault encrypt_string --vault-id {{default_vault_id_arg}} "{{secret_string}}"

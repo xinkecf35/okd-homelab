@@ -94,6 +94,10 @@ ca:
       drop: ["ALL"]
       add: ["NET_BIND_SERVICE"]
     runAsNonRoot: true
+  db:
+    storageClass: nfs
+    accessModes:
+    - ReadWriteMany
 
 # Adjust SecurityContexts to play nice with OKD
 bootstrap:

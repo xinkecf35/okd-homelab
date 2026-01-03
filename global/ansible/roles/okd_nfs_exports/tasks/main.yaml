@@ -10,6 +10,4 @@
 - name: Reconcile existing exports against desired
   ansible.builtin.import_tasks:
     file: "cleanup-exports.yaml"
-    
 # TODO: maybe put in different role, but deploy the NFS CSI Driver, delegating to localhost, with these parameters.
-

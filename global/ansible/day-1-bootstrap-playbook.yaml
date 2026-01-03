@@ -1,4 +1,10 @@
 ---
+- name: Setup NFS Server for NFS CSI Driver
+  hosts:
+    - shared-infra
+  roles:
+    - name: okd_nfs_exports
+      become: true
 - name: Bootstrap OKD for Environment
   module_defaults:
     kubernetes.core.k8s:
@@ -9,6 +15,7 @@
     - localhost
   roles:
     - okd_entra_id
+    - okd_nfs_csi
     - name: smallstep_ca
       vars:
         smallstep_ca_secrets_dir: "{{ [playbook_dir, 'secrets'] | path_join }}"

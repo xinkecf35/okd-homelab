@@ -29,8 +29,8 @@
     name: dontxinkeship-ca
     chart_ref: smallstep/step-certificates
     values_files:
-      # - "{{ smallstep_ca_values_file.path }}"
-      - values-okd-deploy.yaml
+      - "{{ smallstep_ca_values_file.path }}"
     release_namespace: smallstep-ca
     create_namespace: true
     release_state: present
+    wait: true

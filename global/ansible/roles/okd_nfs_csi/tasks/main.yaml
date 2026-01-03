@@ -1,0 +1,22 @@
+---
+- name: Add csi-nfs-driver Helm repo
+  kubernetes.core.helm_repository:
+    name: csi-driver-nfs
+    repo_url: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts
+    force_update: true
+
+- name: Create Role/Rolebinding for ServiceAccounts
+  kubernetes.core.k8s:
+    state: present
+    template: privileged-scc.yaml.j2
+
+- name: Install NFS CSI Driver Helm Chart
+  kubernetes.core.helm:
+    name: nfs-csi-driver
+    chart_ref: csi-driver-nfs/csi-driver-nfs
+    chart_version: 4.12.1
+    create_namespace: true
+    release_namespace: "{{ okd_nfs_csi_namespace_name }}"
+    release_state: present
+    values: "{{ lookup('template', 'values-okd-config.yaml.j2') | from_yaml }}"
+    wait: true

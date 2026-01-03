@@ -1,0 +1,26 @@
+controller:
+  runOnControlPlane: true
+
+serviceAccount:
+  create: true
+  controller: {{ okd_nfs_csi_controller_service_account }} # Name of Service Account to be created or used
+  node: {{ okd_nfs_csi_node_service_account }} # Name of Service Account to be created or used
+
+# TODO: maybe move out to Ansible Role?
+storageClass:
+  create: true
+  name: nfs
+  parameters:
+    server: {{ okd_csi_nfs_host }}
+    share: "/"
+    subDir: {{ okd_nfs_csi_share }}
+  reclaimPolicy: Delete
+  volumeBindingMode: Immediate
+  allowVolumeExpansion: true
+  mountOptions:
+    - nfsvers=4.1
+    - hard
+    - timeo=600
+    - retrans=5
+    - rsize=1048576
+    - wsize=1048576

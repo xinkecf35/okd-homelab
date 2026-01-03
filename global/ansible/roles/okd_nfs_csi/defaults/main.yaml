@@ -1,0 +1,6 @@
+---
+okd_csi_nfs_host: gargantuan.home.arpa
+okd_nfs_csi_share: "lab-01"
+okd_nfs_csi_controller_service_account: csi-nfs-controller-sa
+okd_nfs_csi_node_service_account: csi-nfs-node
+okd_nfs_csi_namespace_name: nfs-csi-driver
