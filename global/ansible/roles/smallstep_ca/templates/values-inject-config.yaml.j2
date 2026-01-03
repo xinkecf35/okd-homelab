@@ -56,7 +56,7 @@ inject:
     # ca_password contains the password used to encrypt x509.intermediate_ca_key, ssh.host_ca_key and ssh.user_ca_key
     # This value must be base64 encoded.
     ca_password: {{ smallstep_ca_intermediate_ca_password | b64encode }}
-    provisioner_password: {{ smallstep_ca_intermediate_ca_password | b64encode }}
+    provisioner_password: {{ smallstep_ca_provisioner_password | b64encode }}
 
     x509:
       # intermediate_ca_key contains the contents of your encrypted intermediate CA key
