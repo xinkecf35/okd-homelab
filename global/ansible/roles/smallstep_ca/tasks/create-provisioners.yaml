@@ -55,6 +55,12 @@
       name: DontXinkeShip CA OKD
       key: "{{ lookup('file', smallstep_ca_jwk_public_key_path) | from_json }}"
       encryptedKey: "{{ lookup('file', smallstep_ca_jwk_private_key_jwe_path) }}"
+      claims:
+        enableSSHCA: false
+        disableRenewal: false
+        allowRenewalAfterExpiry: false
+        disableSmallstepExtensions: false
+        maxTLSCertDuration: 4320h
       options:
         "x509": {}
         "ssh": {}
@@ -62,10 +68,11 @@
       type: ACME
       name: dont-xinkeship-acme
       claims:
-        enableSSHCA: true
+        enableSSHCA: false
         disableRenewal: false
         allowRenewalAfterExpiry: false
         disableSmallstepExtensions: false
+        maxTLSCertDuration: 1128h
       forceCN: true
       options:
         x509: {}
