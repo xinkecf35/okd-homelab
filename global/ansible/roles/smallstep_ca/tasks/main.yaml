@@ -15,3 +15,11 @@
 - name: "Deploy smallstep-ca Helm Chart"
   ansible.builtin.import_tasks:
     file: "helm-install.yaml"
+
+- name: Add SmallStep Root CA Certificate to Cluster Trust
+  kubernetes.core.k8s:
+    state: present
+    template: cluster-trusted-ca.yaml.j2
+    server_side_apply:
+      field_manager: ansible
+      force_conflicts: true
