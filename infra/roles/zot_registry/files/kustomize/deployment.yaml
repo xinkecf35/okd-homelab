@@ -29,8 +29,12 @@ spec:
           volumeMounts:
             - mountPath: "/var/lib/registry"
               name: zot-registry-volume
-            - mountPath: '/etc/zot'
+            - mountPath: "/etc/zot"
               name: zot-registry-config
+            - mountPath: "/etc/ssl/certs/zot"
+              name: zot-registry-tls-cert
+            - mountPath: /etc/ssl/private/zot
+              name: zot-registry-tls-key
           resources:
             limits:
               memory: "128Mi"
@@ -42,4 +46,17 @@ spec:
         - name: zot-registry-config
           configMap:
             name: zot-registry-config
+        - name: zot-registry-tls-cert
+          secret:
+            secretName: zot-registry-certs
+            items:
+              - key: tls.crt
+                path: zot-registry.crt
+        - name: zot-registry-tls-key
+          secret:
+            secretName: zot-registry-certs
+            items:
+              - key: tls.key
+                path: zot-registry.key
+
       dnsPolicy: ClusterFirst

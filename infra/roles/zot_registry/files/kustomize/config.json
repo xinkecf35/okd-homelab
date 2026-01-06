@@ -1,20 +1,24 @@
 {
-    "storage": {
-        "rootDirectory": "/var/lib/registry"
-    },
-    "http": {
-        "address": "0.0.0.0",
-        "port": "80"
-    },
-    "log": {
-        "level": "debug"
-    },
-    "extensions": {
-        "search": {
-            "enable": true
-        },
-        "ui": {
-            "enable": true
-        }
+  "storage": {
+    "rootDirectory": "/var/lib/registry"
+  },
+  "http": {
+    "address": "0.0.0.0",
+    "port": "443",
+    "tls": {
+      "cert": "/etc/ssl/certs/zot/zot-registry.crt",
+      "key": "/etc/ssl/private/zot/zot-registry.key"
     }
+  },
+  "log": {
+    "level": "debug"
+  },
+  "extensions": {
+    "search": {
+      "enable": true
+    },
+    "ui": {
+      "enable": true
+    }
+  }
 }
