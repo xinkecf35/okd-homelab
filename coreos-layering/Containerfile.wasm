@@ -24,7 +24,7 @@ RUN make
 FROM quay.io/okd/scos-content@sha256:bd9bf79f31c21decab45aa24fc4081f5db2ded99a926779c42ac92c24ed5a325 
 
 # Copy built crun to /usr/local/bin/crun-wasm
-COPY --from=compile /opt/crun-wasm/crun /usr/local/bin/crun-wasm
+COPY --from=compile /opt/crun-wasm/crun /usr/bin/crun-wasm
 
 # Grab wasmedge from EPEL 10 repos with supporting dependencies from CRB and Appstream repos
 # Note for some weird reason the CentOS Stream 9 has subscription-manager enabled, that's probably a bug
