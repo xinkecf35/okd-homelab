@@ -1,0 +1,19 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master # not typical , but compact setup 
+  name: 99-crun-wasm-os-layer
+spec:
+  osImageURL: zot-registry.home.arpa/okd-wasm-lab/centos-stream-10-coreos-crun-wasm@sha256:9955c61c4de894389c0f65a915074cc59bab9d7c1dcabc8198079a23f37b5017
+  # From the now deprecated RH blog post https://www.redhat.com/en/blog/webassembly-wasm-and-openshift-a-powerful-duo-for-modern-applications
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+      - contents:
+          source: data:text/plain;charset=utf-8;base64,W2NyaW8ucnVudGltZV0KZGVmYXVsdF9ydW50aW1lID0gImNydW4td2FzbSIKW2NyaW8ucnVudGltZS5ydW50aW1lcy5jcnVuLXdhc21dCnJ1bnRpbWVfcGF0aCA9ICIvdXNyL2Jpbi9jcnVuIgpwbGF0Zm9ybV9ydW50aW1lX3BhdGhzID0geyJ3YXNpL3dhc20zMiIgPSAiL3Vzci9iaW4vY3J1bi13YXNtIn0K
+        mode: 420
+        overwrite: true
+        path: /etc/crio/crio.conf.d/99-crun-wasm.conf
