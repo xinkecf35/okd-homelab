@@ -1,0 +1,36 @@
+FROM quay.io/centos/centos:stream10 as compile
+
+ARG WORKDIR="/opt/crun-wasm"
+ARG CRUN_RELEASE="1.26"
+
+RUN mkdir -p "${WORKDIR}" && \
+    dnf config-manager --set-enabled crb && \
+    dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
+    dnf install -y \
+        autoconf automake gcc git-core glibc-static go-md2man \
+        libcap-devel libseccomp-devel libtool make pkg-config \
+        python python-libmount systemd-devel wasmedge-devel && \
+    dnf clean all
+
+WORKDIR "${WORKDIR}"
+
+RUN git clone --branch="${CRUN_RELEASE}" --depth=1  https://github.com/containers/crun.git . && \
+    ./autogen.sh && \
+    ./configure --enable-embedded-yajl --with-wasmedge
+
+# Separate from previous RUN instruction as make didn't find the target if combined
+RUN make
+
+FROM quay.io/okd/scos-content@sha256:bd9bf79f31c21decab45aa24fc4081f5db2ded99a926779c42ac92c24ed5a325 
+
+# Copy built crun to /usr/local/bin/crun-wasm
+COPY --from=compile /opt/crun-wasm/crun /usr/local/bin/crun-wasm
+
+# Grab wasmedge from EPEL 10 repos with supporting dependencies from CRB and Appstream repos
+# Note for some weird reason the CentOS Stream 9 has subscription-manager enabled, that's probably a bug
+RUN sed -i 's/enable=1/enable=0/' /etc/dnf/plugins/subscription-manager.conf && \
+    dnf config-manager --set-enabled crb --set-enabled appstream && \
+    dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
+    dnf install -y wasmedge && \
+    dnf clean all && \
+    ostree container commit
