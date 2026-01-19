@@ -13,7 +13,7 @@ spec:
     storage:
       files:
       - contents:
-          source: data:text/plain;charset=utf-8;base64,W2NyaW8ucnVudGltZV0KZGVmYXVsdF9ydW50aW1lID0gImNydW4td2FzbSIKW2NyaW8ucnVudGltZS5ydW50aW1lcy5jcnVuLXdhc21dCnJ1bnRpbWVfcGF0aCA9ICIvdXNyL2Jpbi9jcnVuIgpwbGF0Zm9ybV9ydW50aW1lX3BhdGhzID0geyJ3YXNpL3dhc20zMiIgPSAiL3Vzci9iaW4vY3J1bi13YXNtIn0K
+          source: data:text/plain;charset=utf-8;base64,W2NyaW8ucnVudGltZS5ydW50aW1lcy5jcnVuLXdhc21dCnJ1bnRpbWVfcGF0aCA9ICIvdXNyL2Jpbi9jcnVuLXdhc20iCnBsYXRmb3JtX3J1bnRpbWVfcGF0aHMgPSB7Indhc2kvd2FzbTMyIiA9ICIvdXNyL2Jpbi9jcnVuLXdhc20ifQ==
         mode: 420
         overwrite: true
         path: /etc/crio/crio.conf.d/99-crun-wasm.conf
