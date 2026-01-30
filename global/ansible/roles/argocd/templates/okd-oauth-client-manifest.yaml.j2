@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: argocd
+---
+apiVersion: oauth.openshift.io/v1
+kind: OAuthClient
+metadata:
+  name: argocd
+grantMethod: auto
+redirectURIs:
+- {{ argocd_dex_okd_oauth_redirect_uri }}
+---
+apiVersion: v1 
+kind: Secret
+metadata:
+  name: {{ argocd_okd_oauth_secret_name }}
+  namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: argocd
+data:
+  OKD_OAUTH_CLIENT_ID: {{ argocd_okd_oauth_client_id | b64encode }}
+  OKD_OAUTH_CLIENT_SECRET: {{ argocd_okd_oauth_client_secret | b64encode  }}

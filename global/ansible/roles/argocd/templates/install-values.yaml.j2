@@ -1,0 +1,63 @@
+createAggregateRoles: true
+createClusterRoles: true
+
+global:
+  domain: {{ argocd_app_hostname }}
+  extraVolumes:
+    - name: cluster-ca-bundle
+      configMap:
+        name: cluster-root-ca-bundle
+
+  extraVolumeMounts:
+    - mountPath: /etc/ssl/certs/ca-certificates.crt
+      subPath: service-ca.crt
+      name: cluster-ca-bundle
+
+openshift:
+  enabled: true
+
+logging:
+  format: text
+  level: info
+
+server:
+  ingress:
+    annotations:
+      route.openshift.io/termination: passthrough
+    enabled: true
+    ingressClassName: openshift-default
+    path: ""
+    pathType: ImplementationSpecific
+
+configs:
+  cm:
+    statusbadge.enabled: true
+    dex.config: |
+      connectors:
+        - type: openshift
+          id: okd
+          name: OKD
+          config:
+            issuer: {{ argocd_okd_oauth_issuer_uri }}
+            clientID: ${{ argocd_okd_oauth_secret_name }}:OKD_OAUTH_CLIENT_ID
+            clientSecret: ${{ argocd_okd_oauth_secret_name }}:OKD_OAUTH_CLIENT_SECRET
+
+  rbac:
+    policy.csv: |
+      g, cluster-admins, role:admin
+      g, kubeadmin, role: admin
+
+dex:
+  envFrom:
+    - secretRef:
+        name: {{ argocd_okd_oauth_secret_name }}
+
+extraObjects:
+  - kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: cluster-root-ca-bundle
+      annotations:
+        service.beta.openshift.io/inject-cabundle: "true"
+      labels:
+        config.openshift.io/inject-trusted-cabundle: "true"

@@ -1,0 +1,46 @@
+---
+- name: Add argo Helm repo
+  kubernetes.core.helm_repository:
+    name: argo
+    repo_url: https://argoproj.github.io/argo-helm
+    force_update: true
+
+- name: Get Cluster Info
+  kubernetes.core.k8s_cluster_info: {}
+  register: argocd_k8s_cluster_info
+
+- name: Get IngressController status
+  kubernetes.core.k8s_info:
+    api_version: operator.openshift.io/v1
+    kind: IngressController
+    namespace: openshift-ingress-operator
+    name: default
+  register: argocd_default_ingresscontroller
+
+- name: Set default apps domain
+  ansible.builtin.set_fact:
+    argocd_ingress_domain: "{{ argocd_default_ingresscontroller.resources | map(attribute='status.domain') | first }}"
+
+- name: Set ArgoCD hostname
+  ansible.builtin.set_fact:
+    argocd_app_hostname: "argocd.{{ argocd_ingress_domain }}"
+
+- name: Set ArgoCD hostname/URI
+  ansible.builtin.set_fact:
+    argocd_okd_oauth_issuer_uri: "{{ argocd_k8s_cluster_info.connection.host }}"
+    argocd_dex_okd_oauth_redirect_uri: "https://{{ argocd_app_hostname }}/api/dex/callback"
+
+- name: Create ArgoCD Namespace and OKD OAuth Client
+  kubernetes.core.k8s:
+    template: okd-oauth-client-manifest.yaml.j2
+
+- name: Install ArgoCD Helm Chart
+  kubernetes.core.helm:
+    name: argocd
+    chart_ref: argo/argo-cd
+    chart_version: "9.3.4"
+    create_namespace: false
+    release_namespace: argocd
+    release_state: present
+    values: "{{ lookup('template', 'install-values.yaml.j2') | from_yaml }}"
+    wait: false

@@ -1,0 +1,4 @@
+---
+argocd_okd_oauth_client_id: argocd
+argocd_okd_oauth_client_secret: "{{ lookup('password', 'secrets/argocd_okd_oauth_client_secret.txt', length=32, chars=['ascii_letters', 'digits']) }}"
+argocd_okd_oauth_secret_name: okd-oauth-client-secret
