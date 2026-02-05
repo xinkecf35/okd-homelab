@@ -41,6 +41,7 @@ configs:
             issuer: {{ argocd_okd_oauth_issuer_uri }}
             clientID: ${{ argocd_okd_oauth_secret_name }}:OKD_OAUTH_CLIENT_ID
             clientSecret: ${{ argocd_okd_oauth_secret_name }}:OKD_OAUTH_CLIENT_SECRET
+            rootCA: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt 
 
   rbac:
     policy.csv: |
