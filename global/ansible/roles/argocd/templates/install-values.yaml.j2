@@ -10,7 +10,7 @@ global:
 
   extraVolumeMounts:
     - mountPath: /etc/ssl/certs/ca-certificates.crt
-      subPath: service-ca.crt
+      subPath: ca-bundle.crt
       name: cluster-ca-bundle
 
 openshift:
