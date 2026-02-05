@@ -53,6 +53,11 @@ dex:
     - secretRef:
         name: {{ argocd_okd_oauth_secret_name }}
 
+redis:
+  serviceAccount:
+    create: true
+    name: argo-cd-redis
+
 extraObjects:
   - kind: ConfigMap
     apiVersion: v1
@@ -60,3 +65,35 @@ extraObjects:
       name: cluster-root-ca-bundle
       labels:
         config.openshift.io/inject-trusted-cabundle: "true"
+  - apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
+    metadata:
+      name: argo-cd-redis
+      labels:
+        app.kubernetes.io/component: redis
+        app.kubernetes.io/name: argocd-redis
+        app.kubernetes.io/part-of: argocd
+    rules:
+      - apiGroups:
+        - security.openshift.io
+        resourceNames:
+        - nonroot-v2
+        resources:
+        - securitycontextconstraints
+        verbs:
+        - use
+  - apiVersion: rbac.authorization.k8s.io/v1
+    kind: RoleBinding
+    metadata:
+      labels:
+        app.kubernetes.io/component: redis
+        app.kubernetes.io/name: argocd-redis
+        app.kubernetes.io/part-of: argocd
+      name: argo-cd-redis-rb
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: Role
+      name: argo-cd
+    subjects:
+      - kind: ServiceAccount
+        name: argo-cd-redis
