@@ -10,6 +10,7 @@ metadata:
 grantMethod: prompt
 redirectURIs:
 - {{ argocd_dex_okd_oauth_redirect_uri }}
+secret: {{ argocd_okd_oauth_client_secret }}
 ---
 apiVersion: v1 
 kind: Secret
