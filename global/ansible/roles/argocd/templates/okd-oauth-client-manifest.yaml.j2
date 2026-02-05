@@ -7,7 +7,7 @@ apiVersion: oauth.openshift.io/v1
 kind: OAuthClient
 metadata:
   name: argocd
-grantMethod: auto
+grantMethod: prompt
 redirectURIs:
 - {{ argocd_dex_okd_oauth_redirect_uri }}
 ---
