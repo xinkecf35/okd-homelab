@@ -10,14 +10,14 @@ resources:
   - deployment.yaml
   - persistent-volume.yaml
 
-secretGenerator:
-  - name: zot-registry-certs
-    type: "kubernetes.io/tls"
-    files:
-      - tls.crt=secrets/zot-registry.crt
-      - tls.key=secrets/zot-registry.key
 
 configMapGenerator:
   - name: zot-registry-config
     files:
       - config.json
+  - name: caddy-config
+    files:
+      - Caddyfile
+  - name: donxinkeship-root-ca
+    files:
+      - donxinkeship_root_ca.crt

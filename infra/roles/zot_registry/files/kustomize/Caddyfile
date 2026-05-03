@@ -1,0 +1,9 @@
+{
+  email xinke@xinkechen.me
+  acme_ca https://step-ca.apps.lab-01.okd.home.arpa/acme/dont-xinkeship-acme/directory
+  acme_ca_root /usr/local/share/ca-certificates/donxinkeship_root_ca.crt
+}
+
+zot-registry.home.arpa {
+	reverse_proxy localhost:8080
+}

@@ -1,5 +1,6 @@
 
 tf_bin := require('tofu')
+infra_ansible_dir := justfile_dir() / 'infra'
 global_iac_dir := justfile_dir() / 'global/iac'
 global_ansible_dir := justfile_dir() / 'global/ansible'
 global_ansible_secrets_vars_file := justfile_dir() / 'global' / 'ansible' / 'secrets' / 'users.yaml'
@@ -12,6 +13,9 @@ export OKD_GLOBAL_IAC_TF_OUTPUT_JSON_FILE := `mktemp`
 
 _tf_init_global_iac:
     {{ tf_bin }} -chdir="global/iac" init
+
+configure-infra:
+    ansible-playbook "{{ infra_ansible_dir }}/shared-infra-playbook.yaml" -i "{{ infra_ansible_dir }}/inventory/hosts" --ask-become
 
 apply-day-1-okd: _tf_init_global_iac
     {{ tf_bin }} -chdir="{{ global_iac_dir }}" apply

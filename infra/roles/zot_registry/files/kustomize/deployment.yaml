@@ -24,24 +24,38 @@ spec:
           env: []
           ports:
             - name: http
-              containerPort: 80
-              protocol: TCP
-            - name: https
-              containerPort: 443
+              containerPort: 8080
               protocol: TCP
           volumeMounts:
             - mountPath: "/var/lib/registry"
               name: zot-registry-volume
             - mountPath: "/etc/zot"
               name: zot-registry-config
-            - mountPath: "/etc/ssl/certs/zot"
-              name: zot-registry-tls-cert
-            - mountPath: /etc/ssl/private/zot
-              name: zot-registry-tls-key
           resources:
             limits:
               memory: "128Mi"
               cpu: "500m"
+        - name: caddy
+          securityContext: {}
+          image: "docker.io/caddy:2.11.2"
+          imagePullPolicy: IfNotPresent
+          env: []
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: https
+              containerPort: 443
+              protocol: TCP
+          volumeMounts:
+            - mountPath: "/etc/caddy"
+              name: caddy-config
+            - mountPath: "/usr/local/share/ca-certificates"
+              name: donxinkeship-root-ca
+          resources:
+            limits:
+              memory: "64Mi"
+              cpu: "250m"
       volumes:
         - name: zot-registry-volume
           persistentVolumeClaim:
@@ -49,17 +63,11 @@ spec:
         - name: zot-registry-config
           configMap:
             name: zot-registry-config
-        - name: zot-registry-tls-cert
-          secret:
-            secretName: zot-registry-certs
-            items:
-              - key: tls.crt
-                path: zot-registry.crt
-        - name: zot-registry-tls-key
-          secret:
-            secretName: zot-registry-certs
-            items:
-              - key: tls.key
-                path: zot-registry.key
+        - name: caddy-config
+          configMap:
+            name: caddy-config
+        - name: donxinkeship-root-ca
+          configMap:
+            name: donxinkeship-root-ca
 
       dnsPolicy: ClusterFirst

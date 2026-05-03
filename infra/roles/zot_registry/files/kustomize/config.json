@@ -4,11 +4,7 @@
   },
   "http": {
     "address": "0.0.0.0",
-    "port": "443",
-    "tls": {
-      "cert": "/etc/ssl/certs/zot/zot-registry.crt",
-      "key": "/etc/ssl/private/zot/zot-registry.key"
-    }
+    "port": "8080"
   },
   "log": {
     "level": "debug"
