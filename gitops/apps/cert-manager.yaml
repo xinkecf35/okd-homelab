@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: oci://quay.io/jetstack/charts/cert-manager:v1.20.2
+      chart: cert-manager
+      releaseName: cert-manager
+      targetRevision: v1.20.2
+      helm:
+        valueFiles:
+          - $values/gitops/cert-manager/helm/values.yaml
+    - repoURL: https://github.com:xinkecf35/okd-homelab.git
+      revision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 5
+    syncOptions:
+      - ApplyOutOfSyncOnly=true
+      - ServerSideApply=true
