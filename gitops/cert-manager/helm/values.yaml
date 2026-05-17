@@ -13,3 +13,8 @@ volumeMounts:
   - mountPath: /etc/ssl/certs/ca-certificates.crt
     subPath: ca-bundle.crt
     name: cluster-ca-bundle
+
+config:
+  featureGates:
+    # Disable the use of Exact PathType in Ingress resources, to work around OpenShift Ingress not supporting Exact
+    ACMEHTTP01IngressPathTypeExact: false
