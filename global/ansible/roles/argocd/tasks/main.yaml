@@ -38,7 +38,7 @@
   kubernetes.core.helm:
     name: argocd
     chart_ref: argo/argo-cd
-    chart_version: "9.3.4"
+    chart_version: "9.5.14"
     create_namespace: false
     release_namespace: argocd
     release_state: present
