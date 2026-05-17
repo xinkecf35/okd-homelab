@@ -7,7 +7,7 @@ enableCertificateOwnerRef: true
 volumes:
   - name: cluster-ca-bundle
     configMap:
-      name: cluster-root-ca-bundle
+      name: cluster-ca-bundle
 
 volumeMounts:
   - mountPath: /etc/ssl/certs/ca-certificates.crt
