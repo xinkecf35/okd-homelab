@@ -1,6 +1,9 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
+  annnotations:
+    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   name: dontxinkeship-acme
 spec:
   acme:

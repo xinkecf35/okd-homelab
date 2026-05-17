@@ -16,6 +16,9 @@ spec:
     - repoURL: https://github.com/xinkecf35/okd-homelab.git
       revision: main
       ref: values
+    - repoURL: https://github.com/xinkecf35/okd-homelab.git
+      revision: main
+      path: gitops/cert-manager
   destination:
     server: https://kubernetes.default.svc
     namespace: cert-manager

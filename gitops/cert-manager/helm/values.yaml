@@ -2,4 +2,14 @@ crds:
   enabled: true
 
 enableCertificateOwnerRef: true
-  
+
+
+volumes:
+  - name: cluster-ca-bundle
+    configMap:
+      name: cluster-root-ca-bundle
+
+volumeMounts:
+  - mountPath: /etc/ssl/certs/ca-certificates.crt
+    subPath: ca-bundle.crt
+    name: cluster-ca-bundle
