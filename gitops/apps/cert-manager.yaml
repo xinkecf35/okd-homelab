@@ -13,7 +13,7 @@ spec:
       helm:
         valueFiles:
           - $values/gitops/cert-manager/helm/values.yaml
-    - repoURL: https://github.com:xinkecf35/okd-homelab.git
+    - repoURL: https://github.com/xinkecf35/okd-homelab.git
       revision: main
       ref: values
   destination:
