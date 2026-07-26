@@ -17,6 +17,5 @@ patches:
         path: /spec/template/spec/serviceAccountName
         value: sensordash
     target:
-      version: apps/v1
       kind: Deployment
       name: sensordash-webserver
