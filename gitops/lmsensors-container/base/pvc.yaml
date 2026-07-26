@@ -6,3 +6,6 @@ spec:
   accessModes:
     - ReadWriteMany
   storageClassName: nfs
+  resources:
+    requests:
+      storage: 1Gi
