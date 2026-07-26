@@ -12,17 +12,4 @@ resources:
 patches:
   - path: daemonset-env-patch.yaml
   # Temp add while I look at making this to use unprivileged (if it works)
-  - patch: |-
-      - op: add
-        path: /spec/template/spec/serviceAccountName
-        value: sensordash
-    target:
-      kind: Deployment
-      name: sensordash-webserver
-  - patch: |-
-      - op: add
-        path: /spec/template/spec/containers/0/securityContext/runAsUser
-        value: 0
-    target:
-      kind: Deployment
-      name: sensordash-webserver
+  - path: deployment-patch.yaml
