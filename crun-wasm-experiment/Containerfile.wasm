@@ -21,7 +21,7 @@ RUN git clone --branch="${CRUN_RELEASE}" --depth=1  https://github.com/container
 # Separate from previous RUN instruction as make didn't find the target if combined
 RUN make
 
-FROM quay.io/okd/scos-content@sha256:2cc39d57e73c588d2c4fe4c70e2df406b29bd464e314c58acd077959a1c6d588
+FROM quay.io/okd/scos-content@sha256:f483a8053b6964aacac5ab00d7e467ddbb013225a5edd21a56662add1eb79323
 
 # Copy built crun to /usr/local/bin/crun-wasm
 COPY --from=compile /opt/crun-wasm/crun /usr/bin/crun-wasm
