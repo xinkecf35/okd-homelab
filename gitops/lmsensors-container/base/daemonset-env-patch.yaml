@@ -11,6 +11,7 @@ spec:
       labels:
         name: lmsensors
     spec:
+      serviceAccountName: sensordash
       containers:
         - name: lmsensors
           env:
