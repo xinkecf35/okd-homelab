@@ -14,7 +14,7 @@ patches:
   # Temp add while I look at making this to use unprivileged (if it works)
   - patch: |-
       - op: add
-        path: /spec/template/serviceAccountName
+        path: /spec/template/spec/serviceAccountName
         value: sensordash
     target:
       version: apps/v1
