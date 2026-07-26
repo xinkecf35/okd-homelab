@@ -1,7 +1,7 @@
 FROM quay.io/centos/centos:stream10 as compile
 
 ARG WORKDIR="/opt/crun-wasm"
-ARG CRUN_RELEASE="1.26"
+ARG CRUN_RELEASE="1.28"
 
 RUN mkdir -p "${WORKDIR}" && \
     dnf config-manager --set-enabled crb && \
@@ -9,7 +9,7 @@ RUN mkdir -p "${WORKDIR}" && \
     dnf install -y \
         autoconf automake gcc git-core glibc-static go-md2man \
         libcap-devel libseccomp-devel libtool make pkg-config \
-        python python-libmount systemd-devel wasmedge-devel && \
+        python python-libmount systemd-devel json-c-devel wasmedge-devel && \
     dnf clean all
 
 WORKDIR "${WORKDIR}"
@@ -21,7 +21,7 @@ RUN git clone --branch="${CRUN_RELEASE}" --depth=1  https://github.com/container
 # Separate from previous RUN instruction as make didn't find the target if combined
 RUN make
 
-FROM quay.io/okd/scos-content@sha256:bd9bf79f31c21decab45aa24fc4081f5db2ded99a926779c42ac92c24ed5a325 
+FROM quay.io/okd/scos-content@sha256:2cc39d57e73c588d2c4fe4c70e2df406b29bd464e314c58acd077959a1c6d588
 
 # Copy built crun to /usr/local/bin/crun-wasm
 COPY --from=compile /opt/crun-wasm/crun /usr/bin/crun-wasm
