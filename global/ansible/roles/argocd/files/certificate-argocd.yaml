@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-server-tls
+  namespace: argocd
+spec:
+  commonName: argocd.apps.lab-01.okd.home.arpa
+  secretName: argocd-server-tls
+  issuerRef:
+    name: dontxinkeship-acme
+    kind: ClusterIssuer
+  dnsNames:
+    - argocd.apps.lab-01.okd.home.arpa
