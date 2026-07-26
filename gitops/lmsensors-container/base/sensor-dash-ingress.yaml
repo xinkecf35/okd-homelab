@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sensor-dash-ingress
+spec:
+  ingressClassName: openshift-default
+  tls:
+    - hosts:
+        - sensor-dash.apps.lab-01.okd.home.arpa
+      secretName: sensor-dash-tls
+  rules:
+    - host: sensor-dash.apps.lab-01.okd.home.arpa
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sensordash-service
+                port:
+                  number: 80
