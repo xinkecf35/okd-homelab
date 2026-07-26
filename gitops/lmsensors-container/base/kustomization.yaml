@@ -16,6 +16,9 @@ patches:
       - op: add
         path: /spec/template/spec/serviceAccountName
         value: sensordash
+      - op: add
+        path: /spec/template/spec/containers/0/securityContext/runAsUser
+        value: 0
     target:
       kind: Deployment
       name: sensordash-webserver
