@@ -2,7 +2,6 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: sensor-dash-tls
-  namespace: argocd
 spec:
   commonName: sensor-dash.apps.lab-01.okd.home.arpa
   secretName: sensor-dash-tls
