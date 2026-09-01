@@ -4,10 +4,11 @@ metadata:
   name: api-server-tls
   namespace: openshift-config
 spec:
-  commonName: api.lab-01.okd.home.arpa
+  commonName: api.lab-01.okd.home.arpa:6443
   secretName: api-server-tls
   issuerRef:
     name: dontxinkeship-acme
     kind: ClusterIssuer
   dnsNames:
     - api.lab-01.okd.home.arpa
+    - api.lab-01.okd.home.arpa:6443
