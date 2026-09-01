@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: api-server-tls
+  namespace: openshift-config
+spec:
+  commonName: api.lab-01.okd.home.arpa
+  secretName: api-server-tls
+  issuerRef:
+    name: dontxinkeship-acme
+    kind: ClusterIssuer
+  dnsNames:
+    - api.lab-01.okd.home.arpa
