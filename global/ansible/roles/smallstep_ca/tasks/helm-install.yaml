@@ -34,3 +34,17 @@
     create_namespace: true
     release_state: present
     wait: true
+
+- name: Install step-issuer Helm Chart
+  kubernetes.core.helm:
+    name: step-issuer
+    chart_ref: smallstep/step-issuer
+    release_namespace: "{{ smallstep_ca_namespace_name }}"
+    release_state: present
+    values:
+      image:
+        repository: zot-registry.home.arpa/smallstep/step-issuer
+      serviceAccount:
+        create: true
+        name: "{{ step_issuer_service_account_name }}"
+    wait: true

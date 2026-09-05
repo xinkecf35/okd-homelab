@@ -22,6 +22,9 @@ subjects:
   - kind: ServiceAccount
     name: {{ smallstep_ca_service_account_name }}
     namespace: {{ smallstep_ca_namespace_name }}
+  - kind: ServiceAccount
+    name: {{ step_issuer_service_account_name }}
+    namespace: {{ smallstep_ca_namespace_name }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role

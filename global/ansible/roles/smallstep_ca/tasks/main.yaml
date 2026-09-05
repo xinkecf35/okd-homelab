@@ -23,3 +23,11 @@
     server_side_apply:
       field_manager: ansible
       force_conflicts: true
+
+- name: Add StepIssuer for cert-manager to consume
+  kubernetes.core.k8s:
+    state: present
+    template: step-issuer.yaml.j2
+    server_side_apply:
+      field_manager: ansible
+      force_conflicts: true
