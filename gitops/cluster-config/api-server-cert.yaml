@@ -7,7 +7,8 @@ spec:
   commonName: api.lab-01.okd.home.arpa
   secretName: api-server-tls
   issuerRef:
-    name: dontxinkeship-acme
-    kind: ClusterIssuer
+    group: certmanager.step.sm
+    kind: StepClusterIssuer
+    name: step-cluster-issuer
   dnsNames:
     - api.lab-01.okd.home.arpa
