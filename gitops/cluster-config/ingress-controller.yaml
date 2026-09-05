@@ -1,0 +1,12 @@
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+  generation: 1
+  name: default
+  namespace: openshift-ingress-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  defaultCertificate:
+    name: default-ingress-tls
+  

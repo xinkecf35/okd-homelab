@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: default-ingress-tls
+  namespace: openshift-ingress
+spec:
+  commonName: "apps.lab-01.okd.home.arpa"
+  secretName: default-ingress-tls
+  issuerRef:
+    group: certmanager.step.sm
+    kind: StepClusterIssuer
+    name: step-cluster-issuer
+  dnsNames:
+    - "*.apps.lab-01.okd.home.arpa"
