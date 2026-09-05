@@ -1,0 +1,21 @@
+extraArgs:
+  - --collector.disable-defaults
+  - --collector.hwmon
+
+serviceAccount:
+  create: true
+  name: hwmon-node-exporter
+
+hostNetwork: false
+hostPID: false
+
+hostRootFsMount:
+  enabled: false
+
+prometheus:
+  monitor:
+    enabled: true
+
+service:
+  port: 9100
+  targetPort: 9100

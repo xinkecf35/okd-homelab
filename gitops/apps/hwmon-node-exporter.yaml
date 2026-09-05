@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hwmon-node-exporter
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: oci://ghcr.io/prometheus-community/charts/prometheus-node-exporter:v4.56.3
+      chart: prometheus-node-exporter
+      releaseName: hwmon-node-exporter
+      targetRevision: v4.56.3
+      helm:
+        valueFiles:
+          - $values/gitops/hwmon-node-exporter/helm/values.yaml
+    - repoURL: https://github.com/xinkecf35/okd-homelab.git
+      revision: main
+      ref: values
+    - repoURL: https://github.com/xinkecf35/okd-homelab.git
+      revision: main
+      path: gitops/hwmon-node-exporter
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: hardware-monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 5
+    syncOptions:
+      - ApplyOutOfSyncOnly=true
+      - CreateNamespace=true
+      - ServerSideApply=true
