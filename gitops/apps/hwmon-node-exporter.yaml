@@ -6,10 +6,10 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: oci://ghcr.io/prometheus-community/charts/prometheus-node-exporter:v4.56.3
+    - repoURL: oci://ghcr.io/prometheus-community/charts/prometheus-node-exporter:4.56.3
       chart: prometheus-node-exporter
       releaseName: hwmon-node-exporter
-      targetRevision: v4.56.3
+      targetRevision: 4.56.3
       helm:
         valueFiles:
           - $values/gitops/hwmon-node-exporter/helm/values.yaml
