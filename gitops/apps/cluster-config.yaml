@@ -9,6 +9,7 @@ spec:
     - repoURL: https://github.com/xinkecf35/okd-homelab.git
       revision: main
       path: gitops/cluster-config
+      kustomize: {}
   destination:
     server: https://kubernetes.default.svc
     namespace: openshift-config
