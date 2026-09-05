@@ -1,6 +1,7 @@
 extraArgs:
   - --collector.disable-defaults
   - --collector.hwmon
+  - --collector.hwmon.chip-exclude=acpitz
 
 serviceAccount:
   create: true
