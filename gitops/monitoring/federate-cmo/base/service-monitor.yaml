@@ -12,27 +12,27 @@ spec:
       app.kubernetes.io/managed-by: observability-operator
       app.kubernetes.io/name: federate-cmo-ms-prometheus
   endpoints:
-  - params:
-      'match[]':
-        - '{__name__=~".*", namespace="federate-cmo"}'
-    relabelings:
-    - action: replace
-      targetLabel: source
-      replacement: my-openshift-cluster
-    - action: replace
-      targetLabel: __address__
-      replacement: prometheus-k8s.openshift-monitoring.svc:9091
-    - action: labeldrop
-      regex: pod|namespace|service|endpoint|container
-    interval: 30s
-    honorLabels: true
-    port: web
-    scheme: https
-    path: "/federate"
-    bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-    tlsConfig:
-      serverName: prometheus-k8s.openshift-monitoring.svc
-      ca:
-        configMap:
-          key: service-ca.crt
-          name: openshift-service-ca.crt
+    - params:
+        "match[]":
+          - '{__name__=~".*", namespace="federate-cmo"}'
+      relabelings:
+        - action: replace
+          targetLabel: source
+          replacement: my-openshift-cluster
+        - action: replace
+          targetLabel: __address__
+          replacement: prometheus-k8s.openshift-monitoring.svc:9091
+        - action: labeldrop
+          regex: pod|namespace|service|endpoint|container
+      interval: 30s
+      honorLabels: true
+      port: web
+      scheme: https
+      path: "/federate"
+      bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+      tlsConfig:
+        serverName: prometheus-k8s.openshift-monitoring.svc
+        ca:
+          configMap:
+            key: service-ca.crt
+            name: openshift-service-ca.crt
