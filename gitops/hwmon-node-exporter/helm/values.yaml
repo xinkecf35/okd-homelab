@@ -1,7 +1,7 @@
 extraArgs:
   - --collector.disable-defaults
   - --collector.hwmon
-  - --collector.hwmon.chip-exclude=acpitz
+  - "--collector.hwmon.chip-include=.*coretemp.*"
   - --log.level=debug
 
 serviceAccount:
