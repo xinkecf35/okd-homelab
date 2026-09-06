@@ -2,6 +2,7 @@ extraArgs:
   - --collector.disable-defaults
   - --collector.hwmon
   - --collector.hwmon.chip-exclude=acpitz
+  - --log.level=debug
 
 serviceAccount:
   create: true
