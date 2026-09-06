@@ -1,7 +1,7 @@
 extraArgs:
   - --collector.disable-defaults
   - --collector.hwmon
-  - "--collector.hwmon.chip-include=.*coretemp.*"
+  - "--collector.hwmon.chip-include=.*(coretemp|pch_cometlake).*"
   - --log.level=debug
 
 serviceAccount:
