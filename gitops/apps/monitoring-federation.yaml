@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring-federation
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/xinkecf35/okd-homelab.git
+      revision: main
+      path: gitops/monitoring/federate-cmo/base
+      kustomize: {}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: federate-cmo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+      - ServerSideApply=true
