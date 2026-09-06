@@ -16,7 +16,8 @@ spec:
       'match[]':
         - '{__name__=~".*", namespace="federate-cmo"}'
     relabelings:
-    - targetLabel: source
+    - action: replace
+      targetLabel: source
       replacement: my-openshift-cluster
     - action: replace
       targetLabel: __address__
