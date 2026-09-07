@@ -1,0 +1,4 @@
+# HP Z2 G5 / Intel DPTF workaround:
+# ACK INT3400 keep-alive (EVENT=8) requests so the firmware _TMP method
+# does not sit in its retry path and serialize thermal-zone readers.
+SUBSYSTEM=="thermal", ACTION=="change", ENV{NAME}=="INT3400 Thermal", ENV{EVENT}=="8", RUN+="/etc/udev/int3400-imok-ack"

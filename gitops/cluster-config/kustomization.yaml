@@ -8,3 +8,4 @@ resources:
   - ingress-controller.yaml
   - okderators-catalog-source.yaml
   - configs
+  - int3400-thermal-workaround

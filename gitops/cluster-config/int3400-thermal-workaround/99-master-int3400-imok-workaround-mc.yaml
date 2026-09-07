@@ -1,0 +1,25 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 99-master-int3400-imok-workaround
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+        - path: /etc/udev/int3400-imok-ack
+          mode: 493
+          overwrite: true
+          contents:
+            source: >-
+              data:text/plain;charset=utf-8;base64,IyEvYmluL2Jhc2gKc2V0IC1ldQoKaW1vaz0vc3lzL2J1cy9wbGF0Zm9ybS9kZXZpY2VzL0lOVDM0MDA6MDAvaW1vawoKaWYgW1sgLXcgIiR7aW1va30iIF1dOyB0aGVuCiAgICBwcmludGYgJzFcbicgPiAiJHtpbW9rfSIKZmkK
+
+        - path: /etc/udev/rules.d/99-int3400-imok.rules
+          mode: 420
+          overwrite: true
+          contents:
+            source: >-
+              data:text/plain;charset=utf-8;base64,IyBIUCBaMiBHNSAvIEludGVsIERQVEYgd29ya2Fyb3VuZDoKIyBBQ0sgSU5UMzQwMCBrZWVwLWFsaXZlIChFVkVOVD04KSByZXF1ZXN0cyBzbyB0aGUgZmlybXdhcmUgX1RNUCBtZXRob2QKIyBkb2VzIG5vdCBzaXQgaW4gaXRzIHJldHJ5IHBhdGggYW5kIHNlcmlhbGl6ZSB0aGVybWFsLXpvbmUgcmVhZGVycy4KU1VCU1lTVEVNPT0idGhlcm1hbCIsIEFDVElPTj09ImNoYW5nZSIsIEVOVntOQU1FfT09IklOVDM0MDAgVGhlcm1hbCIsIEVOVntFVkVOVH09PSI4IiwgUlVOKz0iL2V0Yy91ZGV2L2ludDM0MDAtaW1vay1hY2siCg==
