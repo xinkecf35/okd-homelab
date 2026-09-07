@@ -1,0 +1,13 @@
+# Needed as my hardware is being dumb
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: node-exporter
+  namespace: openshift-monitoring
+spec:
+  endpoints:
+    - port: https
+      params:
+        exclude[]:
+          - hwmon
+          - thermal_zone
