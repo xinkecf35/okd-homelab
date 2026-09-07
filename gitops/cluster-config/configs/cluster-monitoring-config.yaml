@@ -1,1 +1,3 @@
 enableUserWorkload: true
+nodeExporter:
+  maxProcs: 1
