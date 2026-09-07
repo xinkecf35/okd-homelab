@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ui-plugin.yaml
   - perses.yaml
+  - cmo-datasource.yaml
