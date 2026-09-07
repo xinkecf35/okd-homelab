@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: perses-dashboards
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/xinkecf35/okd-homelab.git
+      revision: main
+      path: gitops/monitoring/dashboards-assets
+      kustomize: {}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+      - ServerSideApply=true
