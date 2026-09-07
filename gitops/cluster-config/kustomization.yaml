@@ -6,4 +6,5 @@ resources:
   - apiserver.yaml
   - default-ingress-cert.yaml
   - ingress-controller.yaml
+  - node-exporter-patch.yaml
   - configs
