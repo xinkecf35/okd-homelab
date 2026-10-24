@@ -1,8 +1,9 @@
 FROM quay.io/centos/centos:stream10 as compile
 
 ARG WORKDIR="/opt/crun-wasm"
-ARG CRUN_RELEASE="1.28"
+ARG CRUN_RELEASE="1.29.1"
 
+# Acquire build depenedencies readily accessible from DNF repos
 RUN mkdir -p "${WORKDIR}" && \
     dnf config-manager --set-enabled crb && \
     dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
@@ -16,12 +17,12 @@ WORKDIR "${WORKDIR}"
 
 RUN git clone --branch="${CRUN_RELEASE}" --depth=1  https://github.com/containers/crun.git . && \
     ./autogen.sh && \
-    ./configure --enable-embedded-yajl --with-wasmedge
+    ./configure --with-wasmedge --enable-embedded-blake3
 
 # Separate from previous RUN instruction as make didn't find the target if combined
 RUN make
 
-FROM quay.io/okd/scos-content@sha256:5835f6fe42d28f10c2f13c3174b18aa8717a2a4692b2d4380d64a4f0a4ff7f1f
+FROM quay.io/okd/scos-content@sha256:4a1c64c23149958810afa5274994f5a49e4ccaab6d84ac2a0e78f5d9b09ffb7f
 
 # Copy built crun to /usr/local/bin/crun-wasm
 COPY --from=compile /opt/crun-wasm/crun /usr/bin/crun-wasm

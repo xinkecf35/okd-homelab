@@ -1,0 +1,14 @@
+platform := "linux/amd64"
+image_name := "zot-registry.home.arpa/okd-wasm-lab/centos-stream-10-coreos-crun-wasm"
+tag := `git rev-parse --short=8 HEAD`
+
+build-wasm:
+    podman build --platform={{ platform }} -f Containerfile.wasm -t {{ image_name }}:{{ tag }}
+
+push-wasm:
+    podman push {{ image_name }}:{{ tag }}
+
+build-and-push:
+    just build-wasm
+    just push-wasm
+
