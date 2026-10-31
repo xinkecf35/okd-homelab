@@ -9,6 +9,9 @@ ansible_vault_id := 'okd-homelab'
 ansible_vault_password_helper := justfile_dir() / "scripts" / "ansible-vault-dashlane-client.sh"
 default_vault_id_arg := ansible_vault_id + "@" + ansible_vault_password_helper
 
+home_dir := env('HOME')
+root_ca_cert_path := home_dir / ".step"  / "certs" / "root_ca.crt"
+
 export OKD_GLOBAL_IAC_TF_OUTPUT_JSON_FILE := `mktemp`
 
 _tf_init_global_iac:
@@ -17,6 +20,7 @@ _tf_init_global_iac:
 configure-infra:
     ansible-playbook "{{ infra_ansible_dir }}/shared-infra-playbook.yaml" -i "{{ infra_ansible_dir }}/inventory/hosts" --ask-become
 
+[env("K8S_AUTH_SSL_CA_CERT", root_ca_cert_path)]
 apply-day-1-okd: _tf_init_global_iac
     {{ tf_bin }} -chdir="{{ global_iac_dir }}" apply
     {{ tf_bin }} -chdir="{{ global_iac_dir }}" output -json > "${OKD_GLOBAL_IAC_TF_OUTPUT_JSON_FILE}"
