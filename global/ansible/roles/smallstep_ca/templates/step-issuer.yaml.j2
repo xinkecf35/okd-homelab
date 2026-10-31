@@ -1,0 +1,17 @@
+apiVersion: certmanager.step.sm/v1beta1
+kind: StepClusterIssuer
+metadata:
+  name: step-cluster-issuer
+spec:
+  # The CA URL:
+  url: https://dontxinkeship-ca-step-certificates.smallstep-ca.svc.cluster.local
+  # The base64 encoded version of the CA root certificate in PEM format:
+  caBundle: {{ smallstep_ca_root_ca_cert | b64encode }}
+  # The provisioner name, kid, and a reference to the provisioner password secret:
+  provisioner:
+    name: DontXinkeShip CA OKD
+    kid: {{ (lookup('file', smallstep_ca_jwk_public_key_path) | from_json).kid }}
+    passwordRef:
+      name: dontxinkeship-ca-step-certificates-provisioner-password # Helm Release Name + default name
+      namespace: {{ smallstep_ca_namespace_name }} 
+      key: password
