@@ -7,5 +7,6 @@ resources:
   - default-ingress-cert.yaml
   - ingress-controller.yaml
   - okderators-catalog-source.yaml
+  - operatorhub-cluster-catalog.yaml
   - configs
   - int3400-thermal-workaround
