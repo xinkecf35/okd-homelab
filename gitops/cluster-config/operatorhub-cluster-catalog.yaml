@@ -1,0 +1,13 @@
+# Note to self: this is the format for OLM v1, not OLM v0/OLM Classic
+# Don't try to install via OLM v0 APIs like Subscription
+apiVersion: olm.operatorframework.io/v1
+kind: ClusterCatalog
+metadata:
+  name: operatorhubio
+spec:
+  priority: 0
+  source:
+    type: Image
+    image:
+      ref: quay.io/operatorhubio/catalog:latest
+      pollIntervalMinutes: 60
