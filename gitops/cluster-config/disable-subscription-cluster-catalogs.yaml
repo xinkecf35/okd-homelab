@@ -1,0 +1,28 @@
+# Disable these OLM v1 catalogs since we don't have the private auth to subscription content
+apiVersion: olm.operatorframework.io/v1
+kind: ClusterCatalog
+metadata:
+  name: openshift-certified-operators
+spec:
+  availabilityMode: Unavailable
+---
+apiVersion: olm.operatorframework.io/v1
+kind: ClusterCatalog
+metadata:
+  name: openshift-community-operators
+spec:
+  availabilityMode: Unavailable
+---
+apiVersion: olm.operatorframework.io/v1
+kind: ClusterCatalog
+metadata:
+  name: openshift-redhat-marketplace
+spec:
+  availabilityMode: Unavailable
+---
+apiVersion: olm.operatorframework.io/v1
+kind: ClusterCatalog
+metadata:
+  name: openshift-redhat-operators
+spec:
+  availabilityMode: Unavailable
