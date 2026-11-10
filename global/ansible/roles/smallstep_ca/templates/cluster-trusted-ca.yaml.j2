@@ -4,7 +4,7 @@ metadata:
   name: user-ca-bundle
   namespace: openshift-config
 data:
-  zot-registry.home.arpa: |
+  ca-bundle.crt: |
 {{ smallstep_ca_root_ca_cert | indent(6, true) }}
 ---
 apiVersion: v1
@@ -30,4 +30,4 @@ metadata:
   name: cluster
 spec:
   additionalTrustedCA:
-    name: user-ca-bundle
+    name: registry-ca-bundle
