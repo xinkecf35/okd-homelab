@@ -19,7 +19,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: openebs-local-pv-hostmount
+  name: openebs-local-pv-hostmount-scc
 subjects:
   - kind: ServiceAccount
     name: openebs-local-pv-provisioner
