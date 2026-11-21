@@ -5,7 +5,7 @@ metadata:
     machineconfiguration.openshift.io/role: master # not typical , but compact setup 
   name: 99-crun-wasm-os-layer
 spec:
-  osImageURL: zot-registry.home.arpa/okd-wasm-lab/centos-stream-10-coreos-crun-wasm@sha256:3dac0aa86154824d3181c8e037ff581c8ae17301ea4756e4d2f06a2eaf4b0153
+  osImageURL: zot-registry.home.arpa/okd-wasm-lab/centos-stream-10-coreos-crun-wasm@sha256:7e01b050df67bf34c794e238ed36e1fe4b280154e60b794a34f1816ad3f61a98
   # Modified from now deprecated RH blog post https://www.redhat.com/en/blog/webassembly-wasm-and-openshift-a-powerful-duo-for-modern-applications
   config:
     ignition:
