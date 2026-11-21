@@ -10,3 +10,4 @@ spec:
       packageName: cloudnative-pg
       channels:
         - stable-v1
+      version: '<=1.30.x'
