@@ -1,0 +1,12 @@
+apiVersion: olm.operatorframework.io/v1
+kind: ClusterExtension
+metadata:
+  name: cloudnative-pg
+spec:
+  namespace: cnpg-system
+  source:
+    sourceType: Catalog
+    catalog:
+      packageName: cloudnative-pg
+      channels:
+        - stable-v1
