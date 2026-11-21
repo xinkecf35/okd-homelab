@@ -3,4 +3,4 @@ kind: Kustomization
 
 resources:
   - basepath-dir-mc.yaml
-  - hostmount-scc.yaml
+  - privileged-scc.yaml
