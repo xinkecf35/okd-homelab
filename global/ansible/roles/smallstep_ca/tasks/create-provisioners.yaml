@@ -70,6 +70,7 @@
       claims:
         enableSSHCA: false
         disableRenewal: false
+        defaultTLSCertDuration: 168h
         allowRenewalAfterExpiry: false
         disableSmallstepExtensions: false
         maxTLSCertDuration: 1128h
