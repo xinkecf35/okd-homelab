@@ -6,6 +6,16 @@ metadata:
 spec:
   project: default
   sources:
+    - repoURL: https://openebs.github.io/openebs
+      chart: openebs
+      releaseName: openebs
+      targetRevision: v4.6.0
+      helm:
+        valueFiles:
+          - $values/gitops/openebs/helm/values.yaml
+    - repoURL: https://github.com/xinkecf35/okd-homelab.git
+      revision: main
+      ref: values
     - repoURL: https://github.com/xinkecf35/okd-homelab.git
       revision: main
       path: gitops/openebs
