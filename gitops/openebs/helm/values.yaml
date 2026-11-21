@@ -1,0 +1,66 @@
+global:
+  # -- Global override for container image registry
+  imageRegistry: ""
+  # -- Global image pull secrets (merged with local imagePullSecrets and not overridden)
+  # - secret
+  imagePullSecrets: []
+  # -- Global override for image pull policy
+  imagePullPolicy: ""
+
+openebs-crds:
+  csi:
+    volumeSnapshots:
+      enabled: false
+
+engines:
+  local:
+    lvm:
+      enabled: false
+    zfs:
+      enabled: false
+    rawfile:
+      enabled: false
+    hostpath:
+      enabled: true
+  replicated:
+    mayastor:
+      enabled: false
+
+# Refer to https://github.com/openebs/dynamic-localpv-provisioner/blob/v4.2.0/deploy/helm/charts/values.yaml for complete set of values.
+localpv-provisioner:
+  basePath: "/var/openebs/local"
+  rbac:
+    create: true
+  globalImageRegistryOverride: true
+  helperPod:
+    image:
+      registry: "docker.io"
+
+  hostpathClass:
+    enabled: true
+    isDefaultClass: false
+    xfsQuota:
+      enabled: true
+      # Set this so the PVC claim is exactly what's allowed
+      softLimitGrace: "0%"
+      hardLimitGrace: "0%"
+
+  localpv:
+    enableLeaderElection: true
+    image:
+      registry: "docker.io"
+    replicas: 2
+    tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+        operator: Exists
+
+  serviceAccount:
+    create: true
+    name: openebs-local-pv-provisioner
+
+loki:
+  enabled: false
+
+alloy:
+  enabled: false
