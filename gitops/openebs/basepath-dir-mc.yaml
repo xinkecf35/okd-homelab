@@ -20,6 +20,7 @@ spec:
             [Service]
             Type=oneshot
             ExecStart=/bin/mkdir -p /var/openebs/local
+            ExecStart=/bin/chmod 0770 /var/openebs/local
             ExecStart=/bin/chcon -Rt container_file_t /var/openebs/local
             RemainAfterExit=yes
 
