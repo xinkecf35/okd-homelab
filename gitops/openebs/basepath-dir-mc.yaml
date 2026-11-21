@@ -1,0 +1,27 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 50-openebs-basepath-directory
+  labels:
+    machineconfiguration.openshift.io/role: master # not typical , but compact setup
+spec:
+  config:
+    ignition:
+      version: 3.6.0
+    systemd:
+      units:
+        - name: create-openebs-basepath-directory.service
+          enabled: true
+          contents: |
+            [Unit]
+            Description=Create OpenEBS Dynamic Local PV directory
+            Before=kubelet.service
+
+            [Service]
+            Type=oneshot
+            ExecStart=/bin/mkdir -p /var/openebs/local
+            ExecStart=/bin/chcon -Rt container_file_t /var/openebs/local
+            RemainAfterExit=yes
+
+            [Install]
+            WantedBy=multi-user.target
