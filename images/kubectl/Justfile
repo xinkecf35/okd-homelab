@@ -1,0 +1,6 @@
+
+kubectl_version := '1.36.6'
+
+build:
+    podman build --platform linux/amd64,linux/arm64 --build-arg  KUBECTL_VERSION={{ kubectl_version }} --manifest zot-registry.home.arpa/homelab/kubectl:{{ kubectl_version }} .
+    podman manifest push zot-registry.home.arpa/homelab/kubectl:{{ kubectl_version }} 
