@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: overthinkingcode-directus
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: git@github.com:xinkecf35/overthinkingcode-next.git
+      path: deploy/directus
+      targetRevision: main
+      helm: {}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: directus
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 5
+    syncOptions:
+      - ApplyOutOfSyncOnly=true
+      - CreateNamespace=true
+      - ServerSideApply=true
