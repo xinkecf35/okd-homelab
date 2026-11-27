@@ -24,7 +24,6 @@ spec:
           envFrom:
             - secretKeyRef:
                 name: tunnel-token
-                key: token
           command:
             # Configures tunnel run parameters
             - cloudflared
