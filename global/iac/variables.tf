@@ -1,3 +1,14 @@
+variable "cloudflare_account_id" {
+  description = "The Cloudflare Account ID we're applying against"
+  type        = string
+}
+
+variable "okd_network_cidr" {
+  description = "The network CIDR used for the OKD Cluster/network. Needed for CloudFlare Zero Trust"
+  type        = string
+  default     = "192.168.2.0/24"
+}
+
 variable "okd_entra_app_name" {
   description = "Application/Display Name in Entra for OKD Cluster"
   type        = string

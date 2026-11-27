@@ -8,3 +8,9 @@ output "okd_entra_id_oidc_config" {
     issuer_url    = "https://login.microsoftonline.com/${data.azuread_client_config.current.tenant_id}/v2.0"
   }
 }
+
+output "okd_cloudflare_tunnel_token" {
+  description = "Tunnel token to give to `cloudflared` deployment for ZTA"
+  sensitive   = true
+  value       = data.cloudflare_zero_trust_tunnel_cloudflared_token.okd_homelab_access.token
+}

@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/azuread"
       version = "~> 3.0"
     }
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 5.25"
+    }
     time = {
       source = "hashicorp/time"
     }
