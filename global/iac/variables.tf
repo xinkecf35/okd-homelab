@@ -9,6 +9,11 @@ variable "cloudflare_zero_trust_team_name" {
   default     = "dontxinkeship"
 }
 
+variable "cloudflare_zero_trust_allow_email_domains" {
+  description = "The allowed email domains to enroll for Zero Trust"
+  type        = list(string)
+}
+
 variable "okd_network_cidr" {
   description = "The network CIDR used for the OKD Cluster/network. Needed for CloudFlare Zero Trust"
   type        = string
