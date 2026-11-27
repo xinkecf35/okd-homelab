@@ -3,6 +3,12 @@ variable "cloudflare_account_id" {
   type        = string
 }
 
+variable "cloudflare_zero_trust_team_name" {
+  description = "The team name associated with CloudFlare Zero Trust"
+  type        = string
+  default     = "dontxinkeship"
+}
+
 variable "okd_network_cidr" {
   description = "The network CIDR used for the OKD Cluster/network. Needed for CloudFlare Zero Trust"
   type        = string
