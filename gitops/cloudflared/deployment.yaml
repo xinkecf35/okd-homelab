@@ -22,7 +22,7 @@ spec:
         - image: cloudflare/cloudflared:latest
           name: cloudflared
           envFrom:
-            - secretKeyRef:
+            - secretRef:
                 name: tunnel-token
           command:
             # Configures tunnel run parameters
