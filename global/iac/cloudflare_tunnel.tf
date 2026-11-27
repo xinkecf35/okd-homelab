@@ -1,4 +1,5 @@
 
+## Configures the "off-ramp"/cloudflared side of the ZTA
 resource "cloudflare_zero_trust_tunnel_cloudflared" "okd_homelab" {
   account_id = var.cloudflare_account_id
   name       = "OKD Homelab"
