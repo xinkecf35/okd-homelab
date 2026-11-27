@@ -27,6 +27,10 @@ resource "azuread_application_registration" "okd_cluster_app" {
   homepage_url = local.cluster_console_url
 }
 
+resource "azuread_service_principal" "okd_cluster_app" {
+  client_id = azuread_application_registration.okd_cluster_app.client_id
+}
+
 resource "azuread_application_owner" "admin" {
   application_id  = azuread_application_registration.okd_cluster_app.id
   owner_object_id = data.azuread_client_config.current.object_id
