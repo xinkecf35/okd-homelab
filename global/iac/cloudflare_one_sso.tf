@@ -29,6 +29,10 @@ resource "azuread_application_registration" "cloudflare_one" {
 
 resource "azuread_service_principal" "cloudflare_one" {
   client_id = azuread_application_registration.cloudflare_one.client_id
+
+  feature_tags {
+    enterprise = true
+  }
 }
 
 resource "azuread_application_owner" "cloudflare_one_admin" {

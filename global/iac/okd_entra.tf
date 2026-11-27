@@ -29,6 +29,10 @@ resource "azuread_application_registration" "okd_cluster_app" {
 
 resource "azuread_service_principal" "okd_cluster_app" {
   client_id = azuread_application_registration.okd_cluster_app.client_id
+
+  feature_tags {
+    enterprise = true
+  }
 }
 
 resource "azuread_application_owner" "admin" {
